@@ -1,5 +1,9 @@
 const socketIO = require('socket.io');
 
+const {
+  MAX_ERROR_COUNT = 20
+} = process.env;
+
 module.exports = (server) => {
   const io = socketIO(server);
 
@@ -24,8 +28,10 @@ module.exports = (server) => {
       errors[socket.id] += 1;
       socket.emit('update-error', message);
       console.error(socket.id, message);
-      if (errors[socket.id] > 10) {
-        console.error(socket.id, 'Max error limit reached.', 'Disconnecting...');
+      if (errors[socket.id] > MAX_ERROR_COUNT) {
+        const error = 'Max error limit reached.';
+        socket.emit('update-error', error);
+        console.error(socket.id, error, 'Disconnecting...');
         socket.disconnect(true);
       }
     };

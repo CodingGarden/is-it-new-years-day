@@ -29,7 +29,7 @@ module.exports = (server) => {
       if (lastMessage[socket.id]) {
         const diff = Date.now() - lastMessage[socket.id];
         if (diff < 80) {
-          return noFunnyBusiness('Sending updates too fast. Updates should be sent no faster than 100 ms. Updated:', diff, 'ms');
+          return noFunnyBusiness(`Sending updates too fast. Updates should be sent no faster than 100 ms. Sent update: ${diff} ms`);
         }
       }
       if (location.x < 0 || location.x > 1) {

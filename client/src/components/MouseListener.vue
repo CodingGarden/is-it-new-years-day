@@ -57,7 +57,7 @@ export default {
     }
 
     socket.on('connect', () => {
-      updateLocation();
+      setTimeout(updateLocation, 200);
     });
 
     return {

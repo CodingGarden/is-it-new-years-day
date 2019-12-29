@@ -5,6 +5,7 @@ module.exports = (server) => {
 
   const state = {};
   const lastMessage = {};
+  const errors = {};
   let updates = {
     totalConnections: 0,
     move: {},
@@ -19,9 +20,14 @@ module.exports = (server) => {
     console.log('Total connections:', updates.totalConnections);
     // no tolerence for funny business
     const noFunnyBusiness = (message) => {
-      console.error(socket.id, message, 'Disconnecting...');
+      errors[socket.id] = errors[socket.id] || 0;
+      errors[socket.id] += 1;
       socket.emit('update-error', message);
-      socket.disconnect(true);
+      console.error(socket.id, message);
+      if (errors[socket.id] > 10) {
+        console.error(socket.id, 'Max error limit reached.', 'Disconnecting...');
+        socket.disconnect(true);
+      }
     };
     socket.emit('state', state);
     // eslint-disable-next-line
@@ -58,6 +64,7 @@ module.exports = (server) => {
     socket.on('disconnect', () => {
       console.log('disconnected', socket.id);
       delete state[socket.id];
+      delete errors[socket.id];
       updates.disconnect[socket.id] = true;
       hasUpdate = true;
       updates.totalConnections = Object.keys(state).length;

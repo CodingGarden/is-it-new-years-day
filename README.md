@@ -2,14 +2,14 @@
 
 A site that tells you if it is new years day or not.
 
-* Front-end - Vue
+Inspired by https://github.com/isitchristmas/web and https://xkcd.com/2236/
+
+## Tech
+
+* Front-end - Vue.js 2.6 + Vue Composition API
 * Back-end - Node.js + Express + Socket.io
 
-## TODO
-
-* Dark / Light theme
-
-## Stretch
+## Ideas
 
 * docd27 - how about multiple countdowns for some different capital cities? 
 * docd27 - curl support / no JS support

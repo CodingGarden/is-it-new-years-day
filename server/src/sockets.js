@@ -20,7 +20,7 @@ module.exports = (server) => {
     // no tolerence for funny business
     const noFunnyBusiness = (message) => {
       console.error(socket.id, message, 'Disconnecting...');
-      socket.emit('error', message);
+      socket.emit('update-error', message);
       socket.disconnect(true);
     };
     socket.emit('state', state);

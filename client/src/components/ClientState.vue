@@ -2,17 +2,21 @@
   <div>
     <mouse
       v-for="client in clients"
+      :location="client.location"
       :isSmooth="true"
-      :transform="client.transform"
       :key="client.id"
     />
   </div>
 </template>
 
 <script>
-import { ref } from '@vue/composition-api';
+import { ref, computed } from '@vue/composition-api';
 
 import Mouse from './Mouse.vue';
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(() => resolve, ms));
+}
 
 export default {
   components: {
@@ -20,18 +24,49 @@ export default {
   },
   props: ['socket'],
   setup({ socket }) {
-    const clients = ref([]);
+    const clientsBydId = ref({});
+    const clients = computed(() => Object.values(clientsBydId.value));
     socket.on('state', (state) => {
-      clients.value = Object.entries(state).reduce((all, [id, client]) => {
+      clientsBydId.value = Object.entries(state).reduce(
+        (byId, [id, location]) => {
+          if (id !== socket.id) {
+            const mouse = {
+              id,
+              location,
+            };
+            // eslint-disable-next-line
+            byId[id] = mouse;
+          }
+          return byId;
+        },
+        {},
+      );
+    });
+
+    socket.on('update', (updates) => {
+      Object.entries(updates.move).forEach(async ([id, moves]) => {
         if (id !== socket.id) {
-          all.push({
-            id,
-            transform: `translate(-50%, -50%) translate(${client.x
-              * 100}vw, ${client.y * 100}vh) scale(0.5)`,
-          });
+          while (moves.length) {
+            const lastMove = moves.shift();
+            clientsBydId.value[id] = {
+              id,
+              location: lastMove,
+            };
+            // eslint-disable-next-line
+            await sleep(250);
+          }
         }
-        return all;
       }, []);
+      clientsBydId.value = Object.entries(clientsBydId.value).reduce(
+        (byId, [id, mouse]) => {
+          if (id !== socket.id && !updates.disconnect[id]) {
+            // eslint-disable-next-line
+            byId[id] = mouse;
+          }
+          return byId;
+        },
+        {},
+      );
     });
 
     return {

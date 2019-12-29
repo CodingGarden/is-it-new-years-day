@@ -23,6 +23,9 @@ export default {
   },
   setup() {
     const socket = io(API_URL);
+    socket.on('error', (message) => {
+      console.error(message);
+    });
     return {
       socket,
     };

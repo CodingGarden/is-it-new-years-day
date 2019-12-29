@@ -24,6 +24,7 @@ export default {
   setup() {
     const socket = io(API_URL);
     socket.on('error', (message) => {
+      // eslint-disable-next-line
       console.error(message);
     });
     return {

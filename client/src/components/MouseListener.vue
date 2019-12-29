@@ -33,6 +33,13 @@ export default {
       location.y = ev.y;
     });
 
+    document.addEventListener('touchmove', (ev) => {
+      if (ev.touches && ev.touches.length) {
+        location.x = ev.touches[0].pageX;
+        location.y = ev.touches[0].pageY;
+      }
+    });
+
     function updateLocation() {
       if (
         Math.abs(lastLocation.x - location.x) > 0.001

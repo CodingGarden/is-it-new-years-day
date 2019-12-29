@@ -36,7 +36,7 @@ export default {
   height: 100%;
   background: black;
   color: white;
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;

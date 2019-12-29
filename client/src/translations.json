@@ -1,0 +1,554 @@
+{
+  "af": {
+    "no": "GEEN",
+    "yes": "JA",
+    "is": "Dit was Nuwejaarsdag vir",
+    "until": "tot Nuwejaarsdag"
+  },
+  "ar": {
+    "no": "لا",
+    "yes": "نعم",
+    "is": "لقد كان يوم رأس السنة الجديدة",
+    "until": "حتى يوم رأس السنة"
+  },
+  "az": {
+    "no": "YOX",
+    "yes": "Bəli",
+    "is": "Bunun üçün Yeni il günü olmuşdur",
+    "until": "Yeni il gününə qədər"
+  },
+  "be": {
+    "no": "НЕ",
+    "yes": "ТАК",
+    "is": "Гэта быў дзень Новага года",
+    "until": "да Новага года"
+  },
+  "bg": {
+    "no": "НЕ",
+    "yes": "ДА",
+    "is": "Това беше денят на Нова година за",
+    "until": "до новогодишния ден"
+  },
+  "bn": {
+    "no": "কোন",
+    "yes": "হ্যাঁ",
+    "is": "এটি ছিল নতুন বছরের দিন",
+    "until": "নতুন বছরের দিন পর্যন্ত"
+  },
+  "bs": {
+    "no": "NE",
+    "yes": "DA",
+    "is": "Bio je to novogodišnji dan",
+    "until": "do novogodišnjeg dana"
+  },
+  "ca": {
+    "no": "NO",
+    "yes": "SÍ",
+    "is": "Ha estat el dia de Cap d'Any",
+    "until": "fins al dia de Cap d'Any"
+  },
+  "ceb": {
+    "no": "WALA",
+    "yes": "OO",
+    "is": "Kini ang adlaw sa Bag-ong Tuig alang sa",
+    "until": "hangtod sa adlaw sa Bag-ong Tuig"
+  },
+  "cs": {
+    "no": "NE",
+    "yes": "ANO",
+    "is": "Byl to nový rok",
+    "until": "do Nového roku"
+  },
+  "cy": {
+    "no": "NA",
+    "yes": "OES",
+    "is": "Mae wedi bod yn ddiwrnod Calan",
+    "until": "tan ddydd Calan"
+  },
+  "da": {
+    "no": "INGEN",
+    "yes": "JA",
+    "is": "Det har været nytårsdag for",
+    "until": "indtil nytårsdag"
+  },
+  "de": {
+    "no": "NEIN",
+    "yes": "JA",
+    "is": "Es war Silvester für",
+    "until": "bis Neujahr"
+  },
+  "el": {
+    "no": "ΟΧΙ",
+    "yes": "ΝΑΙ",
+    "is": "Ήταν Πρωτοχρονιά για",
+    "until": "μέχρι την Πρωτοχρονιά"
+  },
+  "en": {
+    "no": "NO",
+    "yes": "YES",
+    "is": "It has been New Year's day for",
+    "until": "until New Year's day"
+  },
+  "eo": {
+    "no": "NO",
+    "yes": "YES",
+    "is": "It has been New Year's day for",
+    "until": "until New Year's day"
+  },
+  "es": {
+    "no": "NO",
+    "yes": "SI",
+    "is": "Ha sido el día de Año Nuevo para",
+    "until": "hasta el día de año nuevo"
+  },
+  "et": {
+    "no": "EI",
+    "yes": "JAH",
+    "is": "Selle jaoks on olnud uusaasta päev",
+    "until": "kuni uusaasta päevani"
+  },
+  "eu": {
+    "no": "NO",
+    "yes": "BAI",
+    "is": "Urteberri eguna izan da",
+    "until": "Urteberri arte"
+  },
+  "fa": {
+    "no": "نه",
+    "yes": "آره",
+    "is": "این روز سال نو بوده است",
+    "until": "تا روز سال نو"
+  },
+  "fi": {
+    "no": "EI",
+    "yes": "JOO",
+    "is": "Se on ollut uudenvuoden päivä",
+    "until": "uudenvuodenpäivään saakka"
+  },
+  "fr": {
+    "no": "NON",
+    "yes": "OUI",
+    "is": "C'est le jour de l'an pour",
+    "until": "jusqu'au jour de l'an"
+  },
+  "ga": {
+    "no": "UIMH",
+    "yes": "TÁ",
+    "is": "Lá na Bliana Nua a bhí ann",
+    "until": "go dtí lá na Bliana Nua"
+  },
+  "gl": {
+    "no": "NON",
+    "yes": "SI",
+    "is": "Foi o día de fin de ano para",
+    "until": "ata o día de fin de ano"
+  },
+  "gu": {
+    "no": "ના",
+    "yes": "હા",
+    "is": "તે માટે નવા વર્ષનો દિવસ રહ્યો છે",
+    "until": "નવા વર્ષ સુધી"
+  },
+  "ha": {
+    "no": "KADA",
+    "yes": "YES",
+    "is": "Ya kasance ranar Sabuwar Shekara don",
+    "until": "har zuwa ranar Sabuwar Shekara"
+  },
+  "hi": {
+    "no": "नहीं",
+    "yes": "हाँ",
+    "is": "यह नव वर्ष का दिन रहा",
+    "until": "नए साल के दिन तक"
+  },
+  "hmn": {
+    "no": "NO",
+    "yes": "YES",
+    "is": "It has been New Year's day for",
+    "until": "until New Year's day"
+  },
+  "hr": {
+    "no": "NE",
+    "yes": "DA",
+    "is": "Bio je to novogodišnji dan",
+    "until": "do novogodišnjeg dana"
+  },
+  "ht": {
+    "no": "NON",
+    "yes": "WI",
+    "is": "Li te jou nouvèl ane a pou",
+    "until": "jouk jou nouvèl ane a"
+  },
+  "hu": {
+    "no": "NEM",
+    "yes": "IGEN",
+    "is": "Újév volt a napja",
+    "until": "újév napjáig"
+  },
+  "hy": {
+    "no": "ՈՉ",
+    "yes": "ԱՅՈ",
+    "is": "Նոր տարվա օրն էր",
+    "until": "մինչև Ամանորի օրը"
+  },
+  "id": {
+    "no": "TIDAK",
+    "yes": "IYA",
+    "is": "Sudah hari Tahun Baru untuk",
+    "until": "sampai hari Tahun Baru"
+  },
+  "ig": {
+    "no": "Ọ B .GH.",
+    "yes": "EE",
+    "is": "Hasnnɛ wɔfrɛ no New Year no",
+    "until": "ruo ụbọchị Afọ Ọhụrụ"
+  },
+  "is": {
+    "no": "NEI",
+    "yes": "JÁ",
+    "is": "Það hefur verið nýársdagur fyrir",
+    "until": "fram á nýársdag"
+  },
+  "it": {
+    "no": "NO",
+    "yes": "SÌ",
+    "is": "È stato il capodanno per",
+    "until": "fino a capodanno"
+  },
+  "iw": {
+    "no": "לא",
+    "yes": "כן",
+    "is": "זה היה יום השנה החדשה עבור",
+    "until": "עד יום השנה החדשה"
+  },
+  "ja": {
+    "no": "NO",
+    "yes": "はい",
+    "is": "の元日です",
+    "until": "元日まで"
+  },
+  "jw": {
+    "no": "Ora",
+    "yes": "YES",
+    "is": "Iki wis dina Taun Anyar kanggo",
+    "until": "nganti dina Taun Anyar"
+  },
+  "ka": {
+    "no": "არა",
+    "yes": "დიახ",
+    "is": "ეს საახალწლო დღეა",
+    "until": "საახალწლო დღემდე"
+  },
+  "kk": {
+    "no": "ЖОҚ",
+    "yes": "ИӘ",
+    "is": "Бұл Жаңа жыл күні болды",
+    "until": "Жаңа жылға дейін"
+  },
+  "km": {
+    "no": "ទេ",
+    "yes": "បាទ / ចាស",
+    "is": "វាជាថ្ងៃចូលឆ្នាំថ្មី",
+    "until": "រហូតដល់ថ្ងៃចូលឆ្នាំថ្មី"
+  },
+  "kn": {
+    "no": "ಇಲ್ಲ",
+    "yes": "ಹೌದು",
+    "is": "ಇದು ಹೊಸ ವರ್ಷದ ದಿನವಾಗಿದೆ",
+    "until": "ಹೊಸ ವರ್ಷದ ದಿನದವರೆಗೆ"
+  },
+  "ko": {
+    "no": "아니",
+    "yes": "예",
+    "is": "새해 첫날이었습니다",
+    "until": "설날까지"
+  },
+  "la": {
+    "no": "NO",
+    "yes": "YES",
+    "is": "It has been New Year's day for",
+    "until": "until New Year's day"
+  },
+  "lo": {
+    "no": "ບໍ່",
+    "yes": "ແມ່ນແລ້ວ",
+    "is": "ມັນໄດ້ເປັນມື້ປີ ໃໝ່ ສຳ ລັບແລ້ວ",
+    "until": "ຈົນກ່ວາມື້ປີໃຫມ່"
+  },
+  "lt": {
+    "no": "NE",
+    "yes": "TAIP",
+    "is": "Tai buvo Naujųjų metų diena",
+    "until": "iki Naujųjų metų dienos"
+  },
+  "lv": {
+    "no": "NĒ",
+    "yes": "JĀ",
+    "is": "Tā ir bijusi Jaungada diena",
+    "until": "līdz Jaungada dienai"
+  },
+  "mg": {
+    "no": "NO",
+    "yes": "ENY",
+    "is": "Tratry ny taom-baovao tokoa",
+    "until": "mandra-pahatongan'ny taom-baovao"
+  },
+  "mi": {
+    "no": "Kore",
+    "yes": "YES",
+    "is": "Ko te ra o te Tau Hou mo te",
+    "until": "tae noa ki te ra o te Tau Hou"
+  },
+  "mk": {
+    "no": "НЕ",
+    "yes": "ДА",
+    "is": "Тоа беше новогодишен ден",
+    "until": "до новогодишниот ден"
+  },
+  "ml": {
+    "no": "ഇല്ല",
+    "yes": "അതെ",
+    "is": "ഇത് പുതുവത്സര ദിനമാണ്",
+    "until": "പുതുവത്സര ദിവസം വരെ"
+  },
+  "mn": {
+    "no": "ҮГҮЙ",
+    "yes": "ТИЙМ",
+    "is": "Энэ нь шинэ жилийн өдөр болжээ",
+    "until": "Шинэ жилийн өдөр хүртэл"
+  },
+  "mr": {
+    "no": "नाही",
+    "yes": "होय",
+    "is": "तो नवीन वर्षाचा दिवस आहे",
+    "until": "नवीन वर्षाच्या दिवसापर्यंत"
+  },
+  "ms": {
+    "no": "TIDAK",
+    "yes": "YA",
+    "is": "Ia telah menjadi Hari Tahun Baru",
+    "until": "sehingga Hari Tahun Baru"
+  },
+  "mt": {
+    "no": "LE",
+    "yes": "IVA",
+    "is": "Kienet gurnata ghas-sena l-gdida",
+    "until": "sal-jum tas-Sena l-Ġdida"
+  },
+  "my": {
+    "no": "မဟုတ်ဘူး",
+    "yes": "ဟုတ်သည်",
+    "is": "ဒါဟာနှစ်သစ်ကူးနေ့ဖြစ်ခဲ့သည်",
+    "until": "နှစ်သစ်ကူးနေ့အထိ"
+  },
+  "ne": {
+    "no": "होईन",
+    "yes": "हो",
+    "is": "यो लागि नयाँ वर्षको दिन भएको छ",
+    "until": "नयाँ वर्ष को दिन सम्म"
+  },
+  "nl": {
+    "no": "NEE",
+    "yes": "JA",
+    "is": "Het was nieuwjaarsdag voor",
+    "until": "tot Nieuwjaarsdag"
+  },
+  "no": {
+    "no": "NEI",
+    "yes": "JA",
+    "is": "Det har vært nyttårsdag for",
+    "until": "til nyttårsdag"
+  },
+  "ny": {
+    "no": "AYI",
+    "yes": "INDE",
+    "is": "Lakhala tsiku la Chaka Chatsopano",
+    "until": "mpaka tsiku la Chaka Chatsopano"
+  },
+  "pa": {
+    "no": "ਨਹੀਂ",
+    "yes": "ਹਾਂ",
+    "is": "ਇਹ ਨਵੇਂ ਸਾਲ ਦਾ ਦਿਨ ਰਿਹਾ ਹੈ",
+    "until": "ਨਵੇਂ ਸਾਲ ਦੇ ਦਿਨ ਤਕ"
+  },
+  "pl": {
+    "no": "NIE",
+    "yes": "TAK",
+    "is": "To był Nowy Rok",
+    "until": "do Nowego Roku"
+  },
+  "pt": {
+    "no": "NO",
+    "yes": "SIM",
+    "is": "Foi o dia de ano novo para",
+    "until": "até o dia de ano novo"
+  },
+  "ro": {
+    "no": "NU",
+    "yes": "DA",
+    "is": "A fost ziua de Anul Nou pentru",
+    "until": "până în ziua de Anul Nou"
+  },
+  "ru": {
+    "no": "НЕТ",
+    "yes": "ДА",
+    "is": "Это был Новый год для",
+    "until": "до нового года"
+  },
+  "si": {
+    "no": "නැත",
+    "yes": "ඔව්",
+    "is": "එය අලුත් අවුරුදු දිනයයි",
+    "until": "අලුත් අවුරුදු දිනය දක්වා"
+  },
+  "sk": {
+    "no": "NO",
+    "yes": "ÁNO",
+    "is": "Bol to nový rok",
+    "until": "do Nového roka"
+  },
+  "sl": {
+    "no": "NE",
+    "yes": "DA",
+    "is": "Bil je novoletni dan za",
+    "until": "do novoletnega dne"
+  },
+  "so": {
+    "no": "MAYA",
+    "yes": "HAA",
+    "is": "Waxay ahayd maalinta sanadka cusub ee",
+    "until": "ilaa maalinta sanadka cusub"
+  },
+  "sq": {
+    "no": "NO",
+    "yes": "PO",
+    "is": "Ka qenë dita e Vitit të Ri për të",
+    "until": "deri në ditën e Vitit të Ri"
+  },
+  "sr": {
+    "no": "НЕ",
+    "yes": "ДА",
+    "is": "Био је то новогодишњи дан",
+    "until": "до новогодишњег дана"
+  },
+  "st": {
+    "no": "TSIETSI",
+    "yes": "KHAOLO",
+    "is": "E bile letsatsi la Selemo se Secha bakeng la",
+    "until": "ho fihlela letsatsi la Selemo se Secha"
+  },
+  "su": {
+    "no": "Henteu",
+    "yes": "YES",
+    "is": "Parantos aya dinten énggal kanggo",
+    "until": "dugi ka dinten énggal"
+  },
+  "sv": {
+    "no": "NEJ",
+    "yes": "JA",
+    "is": "Det har varit nyårsdag för",
+    "until": "fram till nyårsdagen"
+  },
+  "sw": {
+    "no": "HAPANA",
+    "yes": "NDIYO",
+    "is": "Imekuwa siku ya Mwaka Mpya kwa",
+    "until": "hadi siku ya Mwaka Mpya"
+  },
+  "ta": {
+    "no": "இல்லை",
+    "yes": "ஆம்",
+    "is": "இது புத்தாண்டு நாள்",
+    "until": "புத்தாண்டு நாள் வரை"
+  },
+  "te": {
+    "no": "NO",
+    "yes": "YES",
+    "is": "ఇది నూతన సంవత్సర దినం",
+    "until": "నూతన సంవత్సర రోజు వరకు"
+  },
+  "tg": {
+    "no": "НЕСТ",
+    "yes": "ҲА",
+    "is": "Ин рӯзи Соли нав буд",
+    "until": "то рӯзи Соли нав"
+  },
+  "th": {
+    "no": "NO",
+    "yes": "ใช่",
+    "is": "มันเป็นวันปีใหม่สำหรับ",
+    "until": "จนถึงวันขึ้นปีใหม่"
+  },
+  "tl": {
+    "no": "HINDI",
+    "yes": "OO",
+    "is": "Ito ay araw ng Bagong Taon para sa",
+    "until": "hanggang sa araw ng Bagong Taon"
+  },
+  "tr": {
+    "no": "HAYIR",
+    "yes": "EVET",
+    "is": "İçin Yılbaşı oldu",
+    "until": "Yılbaşı gününe kadar"
+  },
+  "uk": {
+    "no": "НІ",
+    "yes": "ТАК",
+    "is": "Це був день Нового року для",
+    "until": "до новорічного дня"
+  },
+  "ur": {
+    "no": "نہیں",
+    "yes": "جی ہاں",
+    "is": "نئے سال کا دن رہا",
+    "until": "نئے سال کے دن تک"
+  },
+  "uz": {
+    "no": "YO'Q",
+    "yes": "HA",
+    "is": "Bu yangi yil kuni edi",
+    "until": "Yangi yil kuniga qadar"
+  },
+  "vi": {
+    "no": "KHÔNG",
+    "yes": "ĐÚNG",
+    "is": "Hôm nay là ngày tết",
+    "until": "cho đến ngày tết"
+  },
+  "yi": {
+    "no": "קיין",
+    "yes": "יא",
+    "is": "עס איז געווען ניו יאָר ס טאָג פֿאַר",
+    "until": "ביז ניו יאר ס טאָג"
+  },
+  "yo": {
+    "no": "KO",
+    "yes": "BẸẸNI",
+    "is": "O ti jẹ ọjọ Ọdun Tuntun fun",
+    "until": "titi di ọjọ Ọdun Tuntun"
+  },
+  "zh": {
+    "no": "没有",
+    "yes": "是",
+    "is": "这是元旦",
+    "until": "直到元旦"
+  },
+  "zh-CN": {
+    "no": "没有",
+    "yes": "是",
+    "is": "这是元旦",
+    "until": "直到元旦"
+  },
+  "zh-TW": {
+    "no": "沒有",
+    "yes": "是",
+    "is": "這是元旦",
+    "until": "直到元旦"
+  },
+  "zu": {
+    "no": "CHA",
+    "yes": "YEBO",
+    "is": "Kube wusuku loNyaka oMusha we",
+    "until": "kuze kube lusuku lonyaka omusha"
+  }
+}

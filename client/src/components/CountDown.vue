@@ -31,7 +31,7 @@ function getLanguage(override) {
   return language.split('-')[0].toLowerCase();
 }
 
-const language = getLanguage('af');
+const language = getLanguage();
 // eslint-disable-next-line
 console.log('Detected language:', language);
 const translation = translations[language] || translations.en;

@@ -1,9 +1,9 @@
 <template>
-  <mouse :isMine="true" :transform="transform" :location="location" />
+  <mouse :isMine="true" :location="location" />
 </template>
 
 <script>
-import { reactive, computed } from '@vue/composition-api';
+import { reactive } from '@vue/composition-api';
 
 import Mouse from './Mouse.vue';
 
@@ -23,10 +23,6 @@ export default {
       x: location.x,
       y: location.y,
     });
-
-    const transform = computed(
-      () => `translate(-50%, -50%) translate(${location.x}px, ${location.y}px) scale(0.5)`,
-    );
 
     document.addEventListener('mousemove', (ev) => {
       location.x = ev.x;
@@ -57,12 +53,11 @@ export default {
     }
 
     socket.on('connect', () => {
-      setTimeout(updateLocation, 200);
+      setTimeout(updateLocation, 2000);
     });
 
     return {
       location,
-      transform,
     };
   },
 };

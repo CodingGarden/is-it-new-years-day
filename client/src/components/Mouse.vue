@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  props: ['location', 'transform', 'isSmooth', 'isMine'],
+  props: ['location', 'isSmooth', 'isMine'],
 };
 </script>
 
@@ -29,6 +29,6 @@ export default {
 }
 
 .smoothTransition {
-  transition: transform 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 </style>

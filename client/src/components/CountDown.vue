@@ -3,45 +3,56 @@
     <div v-if="ready">
       <p class="yes-no" v-if="isNewYearsDay">YES</p>
       <p class="yes-no" v-else>NO</p>
+      <p  class="time-left" v-if="isNewYearsDay">It's been New Year's day for</p>
     </div>
     <p class="time-left">{{currentTime}}</p>
+    <div v-if="ready && !isNewYearsDay">
+      <p class="time-left">until New Year's day</p>
+    </div>
   </div>
 </template>
 
 <script>
 import { ref } from '@vue/composition-api';
-import { formatDistanceToNow, isSameDay } from 'date-fns';
-
-const formatOptions = {
-  addSuffix: true,
-  includeSeconds: true,
-};
+import { DateTime } from 'luxon';
 
 export default {
   setup() {
     const ready = ref(false);
     const currentTime = ref('Maybe...');
-    const now = new Date();
-    const isNewYearsDay = ref(isSameDay(now, new Date(now.getFullYear(), 0, 1)));
-    let newYearsDay = new Date(now.getFullYear() + 1, 0, 1);
+    let now = DateTime.local();
+    const isNewYearsDay = ref(false);
 
-    setInterval(() => {
+    const durationProps = ['months', 'days', 'hours', 'minutes', 'seconds'];
+    function formatDuration(duration) {
+      return durationProps.reduce((format, prop) => {
+        if (duration[prop]) {
+          return `${format} ${Math.floor(Math.abs(duration[prop]))} ${prop}`;
+        }
+        return format;
+      }, '').trim();
+    }
+
+    function updateClock() {
       ready.value = true;
-      // eslint-disable-next-line
-      const now = new Date();
-      isNewYearsDay.value = isSameDay(now, new Date(now.getFullYear(), 0, 1));
+      now = DateTime.local();
+      isNewYearsDay.value = now.hasSame(DateTime.local(now.year, 1, 1), 'day');
       if (isNewYearsDay.value) {
-        newYearsDay = new Date(now.getFullYear(), 0, 1);
+        const newYearsDay = DateTime.local(now.year, 1, 1);
         isNewYearsDay.value = true;
-        currentTime.value = `It's been New Years day for ${formatDistanceToNow(newYearsDay)}`;
+        currentTime.value = formatDuration(newYearsDay.diffNow(durationProps));
         document.title = 'YES';
       } else {
-        newYearsDay = new Date(now.getFullYear() + 1, 0, 1);
+        const newYearsDay = DateTime.local(now.year + 1, 1, 1);
         isNewYearsDay.value = false;
-        currentTime.value = formatDistanceToNow(newYearsDay, formatOptions);
-        document.title = currentTime.value;
+        currentTime.value = formatDuration(newYearsDay.diffNow(durationProps));
+        document.title = 'NO';
       }
-    }, 500);
+
+      setTimeout(updateClock, 500);
+    }
+
+    updateClock();
 
     return {
       ready,
@@ -54,6 +65,7 @@ export default {
 
 <style scoped>
 .yes-no {
+  font-weight: bold;
   margin: 2rem;
   text-align: center;
   font-size: calc(2rem + 8vmin);
@@ -61,6 +73,6 @@ export default {
 
 .time-left {
   text-align: center;
-  font-size: calc(1rem + 4vmin);
+  font-size: calc(0.8rem + 1vmin);
 }
 </style>

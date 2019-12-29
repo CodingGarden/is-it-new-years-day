@@ -8,13 +8,14 @@
         transform,
       }"
   >
-    <img src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" />
+    <img v-if="isMine" src="https://twemoji.maxcdn.com/v/latest/72x72/1f49a.png" />
+    <img v-if="!isMine" src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" />
   </span>
 </template>
 
 <script>
 export default {
-  props: ['transform', 'isSmooth'],
+  props: ['transform', 'isSmooth', 'isMine'],
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <mouse :transform="transform" />
+  <mouse :isMine="true" :transform="transform" />
 </template>
 
 <script>
@@ -46,7 +46,7 @@ export default {
         });
       }
 
-      setTimeout(updateLocation, 500);
+      setTimeout(updateLocation, 200);
     }
 
     socket.on('connect', () => {

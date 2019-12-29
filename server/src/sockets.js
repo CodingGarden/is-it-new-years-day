@@ -6,18 +6,16 @@ module.exports = (server) => {
   const state = {};
 
   io.on('connection', (socket) => {
+    console.log('Total connections:', Object.keys(state).length);
     console.log('a user connected', socket.id);
     socket.on('location', (location) => {
-      console.log(socket.id, location);
       state[socket.id] = location;
+      io.emit('state', state);
     });
     socket.on('disconnect', () => {
       console.log('a user disconnected', socket.id);
+      console.log('Total connections:', Object.keys(state).length);
       delete state[socket.id];
     });
   });
-
-  setInterval(() => {
-    io.emit('state', state);
-  }, 500);
 };

@@ -8,7 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@formatjs/intl-relativetimeformat": "^4.5.4",
     "@vue/composition-api": "^0.3.4",
     "core-js": "^3.4.4",
     "luxon": "^1.21.3",

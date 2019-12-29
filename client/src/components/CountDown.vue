@@ -31,11 +31,10 @@ function getLanguage(override) {
   return language.split('-')[0].toLowerCase();
 }
 
-const language = getLanguage();
+const language = getLanguage('af');
 // eslint-disable-next-line
 console.log('Detected language:', language);
 const translation = translations[language] || translations.en;
-const relativeTime = new Intl.RelativeTimeFormat(language, { style: 'long' });
 
 export default {
   setup() {
@@ -50,12 +49,17 @@ export default {
       return durationProps
         .reduce((format, prop) => {
           if (duration[prop]) {
-            const results = relativeTime.formatToParts(
-              Math.floor(Math.abs(duration[prop])),
-              prop,
-            );
-            if (results[0].type === 'literal') results.shift();
-            return `${format} ${results[0].value} ${results[1].value} `;
+            // Could use Intl.RelativeTimeFormat
+            // However, requires a pollyfill in some browsers and loading all locale data
+            // https://github.com/formatjs/formatjs/tree/master/packages/intl-relativetimeformat
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat
+            // Using manual translations instead from src/translations.json
+            const value = Math.floor(Math.abs(duration[prop]));
+            let unit = translation[prop];
+            if (value === 1) {
+              unit = translation[prop.slice(0, -1)];
+            }
+            return `${format} ${value} ${unit} `;
           }
           return format;
         }, '')
@@ -69,12 +73,12 @@ export default {
       isNewYearsDay.value = now.hasSame(newYearsDay, 'day');
       if (isNewYearsDay.value) {
         currentTime.value = formatDuration(newYearsDay.diffNow(durationProps));
-        document.title = 'YES';
+        document.title = translation.yes;
         favicon.href = 'fireworks-favicon.png';
       } else {
         newYearsDay = DateTime.local(now.year + 1, 1, 1);
         currentTime.value = formatDuration(newYearsDay.diffNow(durationProps));
-        document.title = 'NO';
+        document.title = translation.no;
         favicon.href = 'x-favicon.png';
       }
 

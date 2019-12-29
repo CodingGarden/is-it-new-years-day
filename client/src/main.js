@@ -1,4 +1,3 @@
-import '@formatjs/intl-relativetimeformat/polyfill-locales';
 import Vue from 'vue';
 import VueCompositionApi from '@vue/composition-api';
 

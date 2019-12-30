@@ -151,9 +151,8 @@ const russian = ({
     timeLeft += days;
     if (days % 10 === 1 && days !== 11) {
       timeLeft += ' день ';
-    } else if (days % 10 < 5 && days !== 0
-                && (days % 100 > 19 || days % 100 < 10)
-                && days % 10 !== 0) {
+    } else if (days % 10 < 5 && days !== 0 && (days % 100 > 19 || days % 100 < 10) && days
+      % 10 !== 0) {
       timeLeft += ' дня ';
     } else {
       timeLeft += ' дней ';
@@ -164,10 +163,8 @@ const russian = ({
     timeLeft += hours;
     if (hours % 10 === 1 && hours !== 11) {
       timeLeft += ' час ';
-    } else if (hours % 10 < 5
-                && hours !== 0
-                && (hours % 100 > 19 || hours % 100 < 10)
-                && hours % 10 !== 0) {
+    } else if (hours % 10 < 5 && hours !== 0 && (hours % 100 > 19 || hours % 100 < 10) && hours
+      % 10 !== 0) {
       timeLeft += ' часа ';
     } else {
       timeLeft += ' часов ';
@@ -178,10 +175,8 @@ const russian = ({
     timeLeft += minutes;
     if (minutes % 10 === 1 && minutes !== 11) {
       timeLeft += ' минуту ';
-    } else if (minutes % 10 < 5
-                && minutes !== 0
-                && (minutes % 100 > 19 || days % 100 < 10)
-                && days % 10 !== 0) {
+    } else if (minutes % 10 < 5 && minutes !== 0 && (minutes % 100 > 19 || days % 100 < 10)
+      && days % 10 !== 0) {
       timeLeft += ' минуты ';
     } else {
       timeLeft += ' минут ';
@@ -193,10 +188,8 @@ const russian = ({
     timeLeft += secondsVal;
     if (secondsVal % 10 === 1 && secondsVal !== 11) {
       timeLeft += ' секунду';
-    } else if (secondsVal % 10 < 5
-                && secondsVal !== 0
-                && (secondsVal % 100 > 19 || secondsVal % 100 < 10)
-                && secondsVal % 10 !== 0) {
+    } else if (secondsVal % 10 < 5 && secondsVal !== 0 && (secondsVal % 100 > 19 || secondsVal
+        % 100 < 10) && secondsVal % 10 !== 0) {
       timeLeft += ' секунды';
     } else {
       timeLeft += ' секунд';

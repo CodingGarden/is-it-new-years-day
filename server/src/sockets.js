@@ -40,7 +40,8 @@ module.exports = (server) => {
     };
 
     function valid(lastTime, location, type = 'updates', maxDiff = 80) {
-      if (!location || !location.x || !location.y) {
+      if (!location || !('x' in location) || !('y' in location)) {
+        console.error(socket.id, 'invalid data', location);
         return noFunnyBusiness('Stop it, get some help.', true);
       }
       if (lastTime[socket.id]) {
@@ -72,10 +73,16 @@ module.exports = (server) => {
         && (Math.abs(lastLocation.x - location.x) > 0.001
         || Math.abs(lastLocation.y - location.y) > 0.001)
       ) {
-        socketUpdates.push(location);
+        socketUpdates.push({
+          x: location.x,
+          y: location.y
+        });
         hasUpdate = true;
       } else if (!lastLocation) {
-        socketUpdates.push(location);
+        socketUpdates.push({
+          x: location.x,
+          y: location.y
+        });
         hasUpdate = true;
       }
     });

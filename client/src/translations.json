@@ -1379,18 +1379,18 @@
   "tr": {
     "no": "HAYIR",
     "yes": "EVET",
-    "is": "İçin Yılbaşı oldu",
-    "until": "Yılbaşı gününe kadar",
+    "is": "Şu kadar süredir yeni yıldayız: ",
+    "until": "kaldı",
     "language": "Turkish",
     "month": "ay",
     "months": "ay",
     "day": "gün",
-    "days": "günler",
+    "days": "gün",
     "hour": "saat",
-    "hours": "saatler",
+    "hours": "saat",
     "minute": "dakika",
     "minutes": "dakika",
-    "second": "ikinci",
+    "second": "saniye",
     "seconds": "saniye"
   },
   "uk": {

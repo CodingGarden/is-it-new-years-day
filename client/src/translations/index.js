@@ -209,10 +209,47 @@ const russian = ({
   return `Новый год наступит через ${timeLeft}`;
 };
 
+const french = ({
+  isNewYearsDay,
+  months,
+  days,
+  hours,
+  minutes,
+  seconds,
+}) => {
+  const timeLeft = translateCommonWithPlural({
+    translations: {
+      months: 'mois',
+      days: 'jours',
+      hours: 'heures',
+      minutes: 'minutes',
+      seconds: 'secondes',
+      month: 'mois',
+      day: 'jour',
+      hour: 'heure',
+      minute: 'minute',
+      second: 'seconde',
+    },
+    values: {
+      months,
+      days,
+      hours,
+      minutes,
+      seconds,
+    },
+  });
+
+  if (isNewYearsDay) {
+    return `C'est le jour de l'an depuis ${timeLeft}`;
+  }
+  return `${timeLeft} avant le jour de l'an`;
+};
+
 // key is the language code. See src/translations.json for language codes
 module.exports = {
   en: english,
   da: danish,
+  fr: french,
   tr: turkish,
   ru: russian,
 };

@@ -17,19 +17,17 @@ const standardTranslate = ({
   translation,
   timevalues,
 }) => {
-  if (timevalues !== undefined) {
-    return translateCommonWithPlural({
-      translations: translation,
-      values: {
-        months: timevalues.months,
-        days: timevalues.days,
-        hours: timevalues.hours,
-        minutes: timevalues.minutes,
-        seconds: timevalues.seconds,
-      },
-    });
-  }
-  return 'undefined';
+  return translateCommonWithPlural({
+    translations: translation,
+    values: {
+      months: timevalues.months,
+      days: timevalues.days,
+      hours: timevalues.hours,
+      minutes: timevalues.minutes,
+      seconds: timevalues.seconds,
+    },
+  });
+
 };
 
 const russian = ({

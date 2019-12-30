@@ -34,7 +34,9 @@ function getLanguage(override) {
 const language = getLanguage();
 // eslint-disable-next-line
 console.log('Detected language:', language);
+// read in lanuage from translations.json
 const translationDb = allTranslations[language] || translations.en;
+// load translation function from translation/index.js --> default translate function
 const specialTranslation = translations[language] || translations.translate;
 
 export default {
@@ -47,13 +49,16 @@ export default {
 
     const durationProps = ['months', 'days', 'hours', 'minutes', 'seconds'];
 
+    // calls functions in translations/index.js with correct arguments
     function createTimeString(values) {
+      // if specialtranslation is default, call with two arguments
       if (specialTranslation === translations.translate) {
         return specialTranslation({
           translation: translationDb,
           timevalues: values,
         });
       }
+      // otherwise call with one argument object
       return specialTranslation(values);
     }
 
@@ -63,9 +68,13 @@ export default {
       let newYearsDay = DateTime.local(now.year, 1, 1);
 
       isNewYearsDay.value = now.hasSame(newYearsDay, 'day');
+
       if (isNewYearsDay.value) {
+        // set time string to translated text
         timeTranslation.value = createTimeString(newYearsDay.diffNow(durationProps));
+        // if used method is default
         if (specialTranslation === translations.translate) {
+          // replace possibly the $time$ string
           if (translationDb.is.includes('$time$')) {
             timeTranslation.value = translationDb.is.replace(/\$time\$/g, timeTranslation.value);
           } else {
@@ -77,8 +86,12 @@ export default {
         favicon.href = 'fireworks-favicon.png';
       } else {
         newYearsDay = DateTime.local(now.year + 1, 1, 1);
+
+        // set time string to translated text
         timeTranslation.value = createTimeString(newYearsDay.diffNow(durationProps));
+        // if standard translate function was used
         if (specialTranslation === translations.translate) {
+          // replace possibly the $time$ function
           if (translationDb.until.includes('$time$')) {
             timeTranslation.value = translationDb.until.replace(/\$time\$/g, timeTranslation.value);
           } else {

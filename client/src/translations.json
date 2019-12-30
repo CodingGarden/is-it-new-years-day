@@ -206,18 +206,18 @@
   "de": {
     "no": "NEIN",
     "yes": "JA",
-    "is": "Es war Silvester für",
-    "until": "bis Neujahr",
+    "is": "Es ist Silvester für",
+    "until": "bis Silvester",
     "language": "German",
     "month": "Monat",
     "months": "Monate",
     "day": "Tag",
     "days": "Tage",
     "hour": "Stunde",
-    "hours": "Std",
-    "minute": "minute",
-    "minutes": "Protokoll",
-    "second": "zweite",
+    "hours": "Stunden",
+    "minute": "Minute",
+    "minutes": "Minuten",
+    "second": "Sekunds",
     "seconds": "Sekunden"
   },
   "el": {
@@ -1108,7 +1108,7 @@
     "no": "НЕТ",
     "yes": "ДА",
     "is": "Это был Новый год для",
-    "until": "до нового года",
+    "until": "До нового года",
     "language": "Russian",
     "month": "месяц",
     "months": "месяцы",
@@ -1118,7 +1118,7 @@
     "hours": "часов",
     "minute": "минут",
     "minutes": "минут",
-    "second": "второй",
+    "second": "секунда",
     "seconds": "секунд"
   },
   "si": {

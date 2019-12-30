@@ -1139,20 +1139,20 @@
     "seconds": "තත්පර"
   },
   "sk": {
-    "no": "NO",
+    "no": "NIE",
     "yes": "ÁNO",
-    "is": "Bol to nový rok",
-    "until": "do Nového roka",
+    "is": "Nový rok už je",
+    "until": "do Nového roka ostáva",
     "language": "Slovak",
     "month": "mesiac",
-    "months": "mesiaca",
+    "months": "mesiace",
     "day": "deň",
     "days": "dni",
     "hour": "hodina",
     "hours": "hodiny",
     "minute": "minúta",
     "minutes": "minúty",
-    "second": "druhý",
+    "second": "sekunda",
     "seconds": "sekundy"
   },
   "sl": {

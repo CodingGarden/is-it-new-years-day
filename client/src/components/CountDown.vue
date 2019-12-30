@@ -53,15 +53,23 @@ export default {
       let newYearsDay = DateTime.local(now.year, 1, 1);
       isNewYearsDay.value = now.hasSame(newYearsDay, 'day');
       if (isNewYearsDay.value) {
-        timeTranslation.value = formatDuration(newYearsDay.diffNow(durationProps));
+        timeTranslation.value = yesNoTranslation.is;
+
         document.title = yesNoTranslation.yes;
         favicon.href = 'fireworks-favicon.png';
       } else {
         newYearsDay = DateTime.local(now.year + 1, 1, 1);
-        timeTranslation.value = formatDuration(newYearsDay.diffNow(durationProps));
+
+        timeTranslation.value = yesNoTranslation.until;
         // timeTranslation.value = newYearsDay.diffNow(durationProps);
         document.title = yesNoTranslation.no;
         favicon.href = 'x-favicon.png';
+      }
+      if(timeTranslation.value.include("$time$")) {
+        timeTranslation.value = timeTranslation.value.replace(/\$time\$/g, newYearsDay.diffNow(durationProps));
+      }
+      else {
+        timeTranslation.value = timeTranslation.value + "\n" + newYearsDay.diffNow(durationProps);
       }
 
       setTimeout(updateClock, 500);

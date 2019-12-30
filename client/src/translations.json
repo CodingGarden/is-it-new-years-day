@@ -187,11 +187,11 @@
     "seconds": "eiliadau"
   },
   "da": {
-    "no": "INGEN",
+    "no": "NEJ",
     "yes": "JA",
-    "is": "Det har været nytårsdag for",
+    "is": "Det har været nytårsdag i",
     "until": "indtil nytårsdag",
-    "language": "Danish",
+    "language": "Dansk",
     "month": "måned",
     "months": "måneder",
     "day": "dag",
@@ -200,7 +200,7 @@
     "hours": "timer",
     "minute": "minut",
     "minutes": "minutter",
-    "second": "anden",
+    "second": "sekund",
     "seconds": "sekunder"
   },
   "de": {

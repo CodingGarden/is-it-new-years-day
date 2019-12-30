@@ -7,9 +7,10 @@ const translateTimeAllPlural = ({
   values,
 }) => Object.entries(values)
   .reduce((all, [prop, value]) => {
+    value = roundValue(value);
     if (!value) return all;
     const unit = translations[prop];
-    return `${all} ${roundValue(value)} ${unit}`;
+    return `${all} ${value} ${unit}`;
   }, '');
 
 const translateCommonWithPlural = ({
@@ -17,12 +18,13 @@ const translateCommonWithPlural = ({
   values,
 }) => Object.entries(values)
   .reduce((all, [prop, value]) => {
+    value = roundValue(value);
     if (!value) return all;
     let unit = translations[prop];
     if (value === 1) {
       unit = translations[prop.slice(0, -1)];
     }
-    return `${all} ${roundValue(value)} ${unit}`;
+    return `${all} ${value} ${unit}`;
   }, '');
 
 const english = ({

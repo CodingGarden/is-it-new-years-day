@@ -16,6 +16,8 @@ import { DateTime } from 'luxon';
 
 import translations from '../translations/index';
 
+const roundValue = value => Math.floor(Math.abs(value));
+
 // Used https://translatr.varunmalhotra.xyz/ to generate
 const allTranslations = require('../translations.json');
 
@@ -48,19 +50,42 @@ export default {
 
     const durationProps = ['months', 'days', 'hours', 'minutes', 'seconds'];
 
+    function getTimeTranslation(newYearsDay) {
+      let {
+        months,
+        days,
+        hours,
+        minutes,
+        seconds,
+      } = newYearsDay.diffNow(durationProps);
+      months = roundValue(months);
+      days = roundValue(days);
+      hours = roundValue(hours);
+      minutes = roundValue(minutes);
+      seconds = roundValue(seconds);
+      if ([months, days, hours, minutes, seconds].every(val => val === 0)) return '';
+      return formatDuration({
+        isNewYearsDay: isNewYearsDay.value,
+        months,
+        days,
+        hours,
+        minutes,
+        seconds,
+      });
+    }
+
     function updateClock() {
       ready.value = true;
       now = DateTime.local();
       let newYearsDay = DateTime.local(now.year, 1, 1);
       isNewYearsDay.value = now.hasSame(newYearsDay, 'day');
       if (isNewYearsDay.value) {
-        timeTranslation.value = formatDuration(newYearsDay.diffNow(durationProps));
+        timeTranslation.value = getTimeTranslation(newYearsDay);
         document.title = yesNoTranslation.yes;
         favicon.href = 'fireworks-favicon.png';
       } else {
         newYearsDay = DateTime.local(now.year + 1, 1, 1);
-        timeTranslation.value = formatDuration(newYearsDay.diffNow(durationProps));
-        // timeTranslation.value = newYearsDay.diffNow(durationProps);
+        timeTranslation.value = getTimeTranslation(newYearsDay);
         document.title = yesNoTranslation.no;
         favicon.href = 'x-favicon.png';
       }

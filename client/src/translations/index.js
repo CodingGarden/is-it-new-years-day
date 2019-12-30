@@ -1,13 +1,10 @@
 const allTranslations = require('../translations.json');
 
-const roundValue = value => Math.floor(Math.abs(value));
-
 const translateTimeAllPlural = ({
   translations,
   values,
 }) => Object.entries(values)
   .reduce((all, [prop, value]) => {
-    value = roundValue(value);
     if (!value) return all;
     const unit = translations[prop];
     return `${all} ${value} ${unit}`;
@@ -18,7 +15,6 @@ const translateCommonWithPlural = ({
   values,
 }) => Object.entries(values)
   .reduce((all, [prop, value]) => {
-    value = roundValue(value);
     if (!value) return all;
     let unit = translations[prop];
     if (value === 1) {
@@ -261,13 +257,12 @@ const russian = ({
     }
   }
 
-  const secondsVal = roundValue(seconds);
-  if ((secondsVal > 0) || (secondsVal === 0 && timeLeft)) {
-    timeLeft += secondsVal;
-    if (secondsVal % 10 === 1 && secondsVal !== 11) {
+  if ((seconds > 0) || (seconds === 0 && timeLeft)) {
+    timeLeft += seconds;
+    if (seconds % 10 === 1 && seconds !== 11) {
       timeLeft += ' секунду';
-    } else if (secondsVal % 10 < 5 && secondsVal !== 0 && (secondsVal % 100 > 19 || secondsVal
-        % 100 < 10) && secondsVal % 10 !== 0) {
+    } else if (seconds % 10 < 5 && seconds !== 0 && (seconds % 100 > 19 || seconds
+        % 100 < 10) && seconds % 10 !== 0) {
       timeLeft += ' секунды';
     } else {
       timeLeft += ' секунд';
@@ -347,7 +342,7 @@ const slovak = ({
   }
 
   if (seconds > 0 || timeLeft !== '') {
-    timeLeft += `${roundValue(seconds)} `;
+    timeLeft += `${seconds} `;
     timeLeft += seconds === 1 ? 'sekunda ' : (seconds < 5 && seconds > 0 ? 'sekundy '
       : 'sekúnd ');
   }
@@ -391,7 +386,7 @@ const czech = ({
   }
 
   if (seconds > 0 || timeLeft !== '') {
-    timeLeft += `${roundValue(seconds)} `;
+    timeLeft += `${seconds} `;
     timeLeft += seconds === 1 ? 'sekunda ' : (seconds < 5 && seconds > 0 ? 'sekundy '
       : 'sekund ');
   }

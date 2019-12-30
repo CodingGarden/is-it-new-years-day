@@ -1,3 +1,5 @@
+const allTranslations = require('../translations.json');
+
 const roundValue = value => Math.floor(Math.abs(value));
 
 const translateTimeAllPlural = ({
@@ -401,7 +403,7 @@ const czech = ({
 };
 
 // key is the language code. See src/translations.json for language codes
-module.exports = {
+const translations = {
   en: english,
   es: spanish,
   pt: portuguese,
@@ -412,3 +414,34 @@ module.exports = {
   sk: slovak,
   cs: czech,
 };
+
+// Fallback to google translate for languages that have not been implemented above
+Object.keys(allTranslations).forEach((language) => {
+  if (!translations[language]) {
+    translations[language] = ({
+      isNewYearsDay,
+      months,
+      days,
+      hours,
+      minutes,
+      seconds,
+    }) => {
+      const timeLeft = translateCommonWithPlural({
+        translations: allTranslations[language],
+        values: {
+          months,
+          days,
+          hours,
+          minutes,
+          seconds,
+        },
+      });
+      if (isNewYearsDay) {
+        return `${allTranslations[language].is} ${timeLeft}`;
+      }
+      return `${timeLeft} ${allTranslations[language].until}`;
+    };
+  }
+});
+
+module.exports = translations;

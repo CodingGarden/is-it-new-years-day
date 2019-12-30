@@ -11,21 +11,34 @@ module.exports = (server) => {
   const lastMessage = {};
   const lastFirework = {};
   const errors = {};
+  let hasUpdate = false;
   let updates = {
     totalConnections: 0,
     move: {},
     disconnect: {},
     fireworks: [],
   };
-  let hasUpdate = false;
 
-  io.on('connection', (socket) => {
+  function totalConnections() {
+    return new Promise((resolve) => {
+      io.clients((error, clients) => {
+        if (clients) {
+          updates.totalConnections = clients.length;
+          return resolve(clients.length);
+        }
+        return resolve(0);
+      });
+    });
+  }
+
+  async function onConnection(socket) {
     hasUpdate = true;
-    updates.totalConnections = Object.keys(state).length + 1;
     console.log('connected', socket.id);
-    console.log('Total connections:', updates.totalConnections);
+    socket.emit('state', state);
+    let total = await totalConnections();
+    console.log('Connected clients:', total);
     // no tolerence for funny business
-    const noFunnyBusiness = (message, drop = false) => {
+    function noFunnyBusiness(message, drop = false) {
       errors[socket.id] = errors[socket.id] || 0;
       errors[socket.id] += 1;
       socket.emit('update-error', message);
@@ -37,7 +50,7 @@ module.exports = (server) => {
         socket.disconnect(true);
       }
       return false;
-    };
+    }
 
     function valid(lastTime, location, type = 'updates', maxDiff = 80) {
       if (!location || !('x' in location) || !('y' in location)) {
@@ -59,9 +72,7 @@ module.exports = (server) => {
       return true;
     }
 
-    socket.emit('state', state);
-    // eslint-disable-next-line
-    socket.on('location', (location) => {
+    function updateLocation(location) {
       if (!valid(lastMessage, location)) return;
       lastMessage[socket.id] = Date.now();
       state[socket.id] = location;
@@ -85,8 +96,9 @@ module.exports = (server) => {
         });
         hasUpdate = true;
       }
-    });
-    socket.on('firework', (location) => {
+    }
+
+    function addFirework(location) {
       if (!valid(lastFirework, location, 'fireworks', 5000)) return;
       if (updates.fireworks.length >= 10) return;
       lastFirework[socket.id] = Date.now();
@@ -97,28 +109,43 @@ module.exports = (server) => {
           y: location.y,
         },
       });
-    });
-    socket.on('disconnect', () => {
+    }
+
+    async function disconnected() {
       console.log('disconnected', socket.id);
       delete state[socket.id];
       delete errors[socket.id];
+      delete lastMessage[socket.id];
+      delete lastFirework[socket.id];
       updates.disconnect[socket.id] = true;
       hasUpdate = true;
-      updates.totalConnections = Object.keys(state).length;
-      console.log('Total connections:', updates.totalConnections);
-    });
-  });
+      total = await totalConnections();
+      console.log('Connected clients:', total);
+    }
 
-  setInterval(() => {
+    // eslint-disable-next-line
+    socket.on('location', updateLocation);
+    socket.on('firework', addFirework);
+    socket.on('disconnect', disconnected);
+  }
+
+  io.on('connection', onConnection);
+
+  async function sendUpdate() {
     if (hasUpdate) {
-      io.emit('update', updates);
+      const total = await totalConnections();
+      io.volatile.emit('update', updates);
       updates = {
-        totalConnections: Object.keys(state).length,
+        totalConnections: total,
         move: {},
         disconnect: {},
         fireworks: [],
       };
       hasUpdate = false;
     }
-  }, 500);
+
+    setTimeout(sendUpdate, 500);
+  }
+
+  setTimeout(sendUpdate, 500);
 };

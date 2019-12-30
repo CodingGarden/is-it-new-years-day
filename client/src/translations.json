@@ -478,7 +478,7 @@
   "hr": {
     "no": "NE",
     "yes": "DA",
-    "is": "Bio je to novogodišnji dan",
+    "is": "Novogodišnji dan je već",
     "until": "do novogodišnjeg dana",
     "language": "Croatian",
     "month": "mjesec",
@@ -1209,7 +1209,7 @@
   "sr": {
     "no": "НЕ",
     "yes": "ДА",
-    "is": "Био је то новогодишњи дан",
+    "is": "Новогодишњи дан је већ",
     "until": "до новогодишњег дана",
     "language": "Serbian",
     "month": "месец дана",

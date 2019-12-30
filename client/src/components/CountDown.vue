@@ -31,7 +31,8 @@ function getLanguage(override) {
   return language.split('-')[0].toLowerCase();
 }
 
-const language = getLanguage();
+const params = new URLSearchParams(window.location.search);
+const language = getLanguage(params.get('lang'));
 // eslint-disable-next-line
 console.log('Detected language:', language);
 const yesNoTranslation = allTranslations[language] || allTranslations.en;

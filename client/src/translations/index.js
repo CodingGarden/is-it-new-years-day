@@ -282,6 +282,50 @@ const slovak = ({
   return `Do Nového roku zostáva: ${timeLeft}`;
 };
 
+const czech = ({
+  isNewYearsDay,
+  months,
+  days,
+  hours,
+  minutes,
+  seconds,
+}) => {
+  let timeLeft = '';
+
+  if (months > 0) {
+    timeLeft += `${months} `;
+    timeLeft += months === 1 ? 'měsíc ' : (months < 5 ? 'měsíce ' : 'měsíců ');
+  }
+
+  if (days > 0 || timeLeft !== '') {
+    timeLeft += `${days} `;
+    timeLeft += days === 1 ? 'den ' : (days < 5 && days > 0 ? 'dní ' : 'dnů ');
+  }
+
+  if (hours > 0 || timeLeft !== '') {
+    timeLeft += `${hours} `;
+    timeLeft += hours === 1 ? 'hodina ' : (hours < 5 && hours > 0 ? 'hodiny ' : 'hodin ');
+  }
+
+  if (minutes > 0 || timeLeft !== '') {
+    timeLeft += `${minutes} `;
+    timeLeft += minutes === 1 ? 'minuta ' : (minutes < 5 && minutes > 0 ? 'minuty ' : 'minut ');
+  }
+
+  if (seconds > 0 || timeLeft !== '') {
+    timeLeft += `${roundValue(seconds)} `;
+    timeLeft += seconds === 1 ? 'sekunda ' : (seconds < 5 && seconds > 0 ? 'sekundy '
+      : 'sekund ');
+  }
+
+  timeLeft = timeLeft.slice(0, -1);
+
+  if (isNewYearsDay) {
+    return `Nový rok máme ${timeLeft}`;
+  }
+  return `Do Nového roku zbývá: ${timeLeft}`;
+};
+
 // key is the language code. See src/translations.json for language codes
 module.exports = {
   en: english,
@@ -290,4 +334,5 @@ module.exports = {
   tr: turkish,
   ru: russian,
   sk: slovak,
+  cs: czech,
 };

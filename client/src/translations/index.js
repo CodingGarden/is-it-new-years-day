@@ -107,6 +107,6 @@ const russian = ({
 
 // key is the language code. See src/translations.json for language codes
 module.exports = {
-  de: russian,
+  ru: russian,
   translate: standardTranslate,
 };

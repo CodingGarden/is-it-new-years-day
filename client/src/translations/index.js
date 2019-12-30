@@ -126,9 +126,81 @@ const danish = ({
   return `${timeLeft} indtil det er nytårsaften`;
 };
 
+const russian = ({
+  isNewYearsDay,
+  months,
+  days,
+  hours,
+  minutes,
+  seconds,
+}) => {
+  let timeLeft = '';
+
+  if (months > 0) {
+    timeLeft += months;
+    if (months == 1) {
+      timeLeft += ' месяц ';
+    } else if (months < 5) {
+      timeLeft += ' месяца ';
+    } else {
+      timeLeft += ' месяцев ';
+    }
+  }
+
+  if ((days > 0) || (days == 0 && timeLeft)) {
+    timeLeft += days;
+    if (days % 10 == 1 && days != 11) {
+      timeLeft += ' день ';
+    } else if (days % 10 < 5 && days % 100 != 1 && days != 0) {
+      timeLeft += ' дня ';
+    } else {
+      timeLeft += ' дней ';
+    }
+  }
+
+  if ((hours > 0) || (hours == 0 && timeLeft)) {
+    timeLeft += hours;
+    if (hours % 10 == 1 && hours != 11) {
+      timeLeft += ' час ';
+    } else if (hours % 10 < 5 && hours % 100 != 1 && hours != 0) {
+      timeLeft += ' часа ';
+    } else {
+      timeLeft += ' часов ';
+    }
+  }
+
+  if ((minutes > 0) || (minutes == 0 && timeLeft)) {
+    timeLeft += minutes;
+    if (minutes % 10 == 1 && minutes != 11) {
+      timeLeft += ' минуту ';
+    } else if (minutes % 10 < 5 && minutes % 100 != 1 && minutes != 0) {
+      timeLeft += ' минуты ';
+    } else {
+      timeLeft += ' минут ';
+    }
+  }
+
+  if ((seconds > 0) || (seconds == 0 && timeLeft)) {
+    timeLeft += seconds;
+    if (seconds % 10 == 1 && seconds != 11) {
+      timeLeft += ' секунду';
+    } else if (seconds % 10 < 5 && seconds % 100 != 1) {
+      timeLeft += ' секунды';
+    } else {
+      timeLeft += ' секунд';
+    }
+  }
+
+  if (isNewYearsDay) {
+    return `Новый год наступил ${timeLeft} назад`;
+  }
+  return `Новый год наступит через ${timeLeft}`;
+};
+
 // key is the language code. See src/translations.json for language codes
 module.exports = {
   en: english,
   da: danish,
   tr: turkish,
+  ru: russian,
 };

@@ -41,6 +41,7 @@ module.exports = (server) => {
 
     function valid(lastTime, location, type = 'updates', maxDiff = 80) {
       if (!location || !location.x || !location.y) {
+        console.error(socket.id, 'invalid data', location);
         return noFunnyBusiness('Stop it, get some help.', true);
       }
       if (lastTime[socket.id]) {

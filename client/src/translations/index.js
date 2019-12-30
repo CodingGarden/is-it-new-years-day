@@ -399,6 +399,43 @@ const czech = ({
   return `Do Nového roku zbývá: ${timeLeft}`;
 };
 
+
+const german = ({
+  isNewYearsDay,
+  months,
+  days,
+  hours,
+  minutes,
+  seconds,
+}) => {
+  const timeLeft = translateCommonWithPlural({
+    translations: {
+      months: 'Monate',
+      days: 'Tage',
+      hours: 'Stunden',
+      minutes: 'Minuten',
+      seconds: 'Sekunden',
+      month: 'Monat',
+      day: 'Tag',
+      hour: 'Stunde',
+      minute: 'Minute',
+      second: 'Sekunde',
+    },
+    values: {
+      months,
+      days,
+      hours,
+      minutes,
+      seconds,
+    },
+  });
+
+  if (isNewYearsDay) {
+    return `Seit ${timeLeft} ist es Silvester`;
+  }
+  return `${timeLeft} bis Silvester`;
+};
+
 // key is the language code. See src/translations.json for language codes
 const translations = {
   en: english,
@@ -410,6 +447,7 @@ const translations = {
   ru: russian,
   sk: slovak,
   cs: czech,
+  de: german,
 };
 
 // Fallback to google translate for languages that have not been implemented above

@@ -47,7 +47,7 @@ export default {
 <style scoped>
 .firework {
   mix-blend-mode: hard-light;
-  box-shadow: 0px 0px 5px #ffffff;
+  filter: blur(2px);
   opacity: 0;
   position: absolute;
   transition: transform cubic-bezier(0.175, 0.885, 0.32, 1.275);

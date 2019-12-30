@@ -3,6 +3,7 @@
     <count-down />
     <mouse-listener :socket="socket" />
     <client-state :socket="socket" />
+    <fireworks :socket="socket" />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import io from 'socket.io-client';
 import CountDown from './CountDown.vue';
 import MouseListener from './MouseListener.vue';
 import ClientState from './ClientState.vue';
+import Fireworks from './Fireworks.vue';
 
 import API_URL from '../API_URL';
 
@@ -20,6 +22,7 @@ export default {
     CountDown,
     MouseListener,
     ClientState,
+    Fireworks,
   },
   setup() {
     const socket = io(API_URL);

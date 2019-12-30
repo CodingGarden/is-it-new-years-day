@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="countdown">
     <div v-if="ready">
       <p class="yes-no" v-if="isNewYearsDay">{{yesNoTranslation.yes}}</p>
       <p class="yes-no" v-else>{{yesNoTranslation.no}}</p>
@@ -80,6 +80,10 @@ export default {
 </script>
 
 <style scoped>
+.countdown {
+  z-index: 100;
+}
+
 .yes-no {
   font-weight: bold;
   margin: 2rem;

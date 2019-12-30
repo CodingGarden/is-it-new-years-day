@@ -9,11 +9,13 @@ module.exports = (server) => {
 
   const state = {};
   const lastMessage = {};
+  const lastFirework = {};
   const errors = {};
   let updates = {
     totalConnections: 0,
     move: {},
-    disconnect: {}
+    disconnect: {},
+    fireworks: [],
   };
   let hasUpdate = false;
 
@@ -34,17 +36,17 @@ module.exports = (server) => {
         console.error(socket.id, error, 'Disconnecting...');
         socket.disconnect(true);
       }
+      return false;
     };
-    socket.emit('state', state);
-    // eslint-disable-next-line
-    socket.on('location', (location) => {
+
+    function valid(lastTime, location, type = 'updates', maxDiff = 80) {
       if (!location || !location.x || !location.y) {
         return noFunnyBusiness('Stop it, get some help.', true);
       }
-      if (lastMessage[socket.id]) {
-        const diff = Date.now() - lastMessage[socket.id];
-        if (diff < 80) {
-          return noFunnyBusiness(`Sending updates too fast. Updates should be sent no faster than 100 ms. Sent update: ${diff} ms`);
+      if (lastTime[socket.id]) {
+        const diff = Date.now() - lastTime[socket.id];
+        if (diff < maxDiff) {
+          return noFunnyBusiness(`Sending ${type} too fast. ${type} should be sent no faster than ${maxDiff} ms. Sent update: ${diff} ms`);
         }
       }
       if (location.x < 0 || location.x > 1) {
@@ -53,6 +55,13 @@ module.exports = (server) => {
       if (location.y < 0 || location.y > 1) {
         return noFunnyBusiness('Invalid Y Value.');
       }
+      return true;
+    }
+
+    socket.emit('state', state);
+    // eslint-disable-next-line
+    socket.on('location', (location) => {
+      if (!valid(lastMessage, location)) return;
       lastMessage[socket.id] = Date.now();
       state[socket.id] = location;
       updates.move[socket.id] = updates.move[socket.id] || [];
@@ -69,6 +78,18 @@ module.exports = (server) => {
         socketUpdates.push(location);
         hasUpdate = true;
       }
+    });
+    socket.on('firework', (location) => {
+      if (!valid(lastFirework, location, 'fireworks', 5000)) return;
+      if (updates.fireworks.length >= 10) return;
+      lastFirework[socket.id] = Date.now();
+      updates.fireworks.push({
+        id: socket.id + Date.now(),
+        location: {
+          x: location.x,
+          y: location.y,
+        },
+      });
     });
     socket.on('disconnect', () => {
       console.log('disconnected', socket.id);
@@ -87,7 +108,8 @@ module.exports = (server) => {
       updates = {
         totalConnections: Object.keys(state).length,
         move: {},
-        disconnect: {}
+        disconnect: {},
+        fireworks: [],
       };
       hasUpdate = false;
     }

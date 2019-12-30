@@ -24,6 +24,18 @@ export default {
       y: location.y,
     });
 
+    let lastFireWorkSent;
+    document.addEventListener('mousedown', (ev) => {
+      if (!lastFireWorkSent || (Date.now() - lastFireWorkSent) > 5000) {
+        const fwLocation = {
+          x: Math.clamp(ev.x / window.innerWidth, 0, 1),
+          y: Math.clamp(ev.y / window.innerHeight, 0, 1),
+        };
+        socket.emit('firework', fwLocation);
+        lastFireWorkSent = Date.now();
+      }
+    });
+
     document.addEventListener('mousemove', (ev) => {
       location.x = ev.x;
       location.y = ev.y;

@@ -1380,7 +1380,7 @@
     "no": "HAYIR",
     "yes": "EVET",
     "is": "Şu kadar süredir yeni yıldayız: ",
-    "until": "kaldı",
+    "until": "Yılbaşına $time$ kaldı!",
     "language": "Turkish",
     "month": "ay",
     "months": "ay",

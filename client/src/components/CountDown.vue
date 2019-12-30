@@ -1,8 +1,8 @@
 <template>
   <div class="countdown">
     <div v-if="ready">
-      <p class="yes-no" v-if="isNewYearsDay">{{yesNoTranslation.yes}}</p>
-      <p class="yes-no" v-else>{{yesNoTranslation.no}}</p>
+      <p class="yes-no" v-if="isNewYearsDay">{{translationDb.yes}}</p>
+      <p class="yes-no" v-else>{{translationDb.no}}</p>
     </div>
     <div v-if="ready">
       <p class="time-left">{{timeTranslation}}</p>
@@ -34,8 +34,8 @@ function getLanguage(override) {
 const language = getLanguage();
 // eslint-disable-next-line
 console.log('Detected language:', language);
-const yesNoTranslation = allTranslations[language] || translations.en;
-const formatDuration = translations[language] || translations.en;
+const translationDb = allTranslations[language] || translations.en;
+const specialTranslation = translations[language] || translations.translate;
 
 export default {
   setup() {
@@ -47,31 +47,47 @@ export default {
 
     const durationProps = ['months', 'days', 'hours', 'minutes', 'seconds'];
 
+    function createTimeString(values) {
+      if (specialTranslation === translations.translate) {
+        return specialTranslation({
+          translation: translationDb,
+          timevalues: values,
+        });
+      }
+      return specialTranslation(values);
+    }
+
     function updateClock() {
       ready.value = true;
       now = DateTime.local();
       let newYearsDay = DateTime.local(now.year, 1, 1);
+
       isNewYearsDay.value = now.hasSame(newYearsDay, 'day');
       if (isNewYearsDay.value) {
-        timeTranslation.value = yesNoTranslation.is;
+        timeTranslation.value = createTimeString(newYearsDay.diffNow(durationProps));
+        if (specialTranslation === translations.translate) {
+          if (translationDb.is.includes('$time$')) {
+            timeTranslation.value = translationDb.is.replace(/\$time\$/g, timeTranslation.value);
+          } else {
+            timeTranslation.value = `${translationDb.is} \n ${timeTranslation.value}`;
+          }
+        }
 
-        document.title = yesNoTranslation.yes;
+        document.title = translationDb.yes;
         favicon.href = 'fireworks-favicon.png';
       } else {
         newYearsDay = DateTime.local(now.year + 1, 1, 1);
-
-        timeTranslation.value = yesNoTranslation.until;
-        // timeTranslation.value = newYearsDay.diffNow(durationProps);
-        document.title = yesNoTranslation.no;
+        timeTranslation.value = createTimeString(newYearsDay.diffNow(durationProps));
+        if (specialTranslation === translations.translate) {
+          if (translationDb.until.includes('$time$')) {
+            timeTranslation.value = translationDb.until.replace(/\$time\$/g, timeTranslation.value);
+          } else {
+            timeTranslation.value = `${timeTranslation.value} \n ${translationDb.until}`;
+          }
+        }
+        document.title = translationDb.no;
         favicon.href = 'x-favicon.png';
       }
-      if(timeTranslation.value.include("$time$")) {
-        timeTranslation.value = timeTranslation.value.replace(/\$time\$/g, newYearsDay.diffNow(durationProps));
-      }
-      else {
-        timeTranslation.value = timeTranslation.value + "\n" + newYearsDay.diffNow(durationProps);
-      }
-
       setTimeout(updateClock, 500);
     }
 
@@ -81,7 +97,7 @@ export default {
       ready,
       timeTranslation,
       isNewYearsDay,
-      yesNoTranslation,
+      translationDb,
     };
   },
 };

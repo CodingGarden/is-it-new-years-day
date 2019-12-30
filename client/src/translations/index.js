@@ -1,15 +1,5 @@
 const roundValue = value => Math.floor(Math.abs(value));
 
-const translateTimeAllPlural = ({
-  translations,
-  values,
-}) => Object.entries(values)
-  .reduce((all, [prop, value]) => {
-    if (!value) return all;
-    const unit = translations[prop];
-    return `${all} ${roundValue(value)} ${unit}`;
-  }, '');
-
 const translateCommonWithPlural = ({
   translations,
   values,
@@ -23,107 +13,23 @@ const translateCommonWithPlural = ({
     return `${all} ${roundValue(value)} ${unit}`;
   }, '');
 
-const english = ({
-  isNewYearsDay,
-  months,
-  days,
-  hours,
-  minutes,
-  seconds,
+const standardTranslate = ({
+  translation,
+  timevalues,
 }) => {
-  const timeLeft = translateCommonWithPlural({
-    translations: {
-      months: 'months',
-      days: 'days',
-      hours: 'hours',
-      minutes: 'minutes',
-      seconds: 'seconds',
-      month: 'month',
-      day: 'day',
-      hour: 'hour',
-      minute: 'minute',
-      second: 'second',
-    },
-    values: {
-      months,
-      days,
-      hours,
-      minutes,
-      seconds,
-    },
-  });
-
-  if (isNewYearsDay) {
-    return `It has been New Year's day for${timeLeft}`;
+  if (timevalues !== undefined) {
+    return translateCommonWithPlural({
+      translations: translation,
+      values: {
+        months: timevalues.months,
+        days: timevalues.days,
+        hours: timevalues.hours,
+        minutes: timevalues.minutes,
+        seconds: timevalues.seconds,
+      },
+    });
   }
-  return `${timeLeft} until New Year's day`;
-};
-
-const turkish = ({
-  isNewYearsDay,
-  months,
-  days,
-  hours,
-  minutes,
-  seconds,
-}) => {
-  const translatedTime = translateTimeAllPlural({
-    translations: {
-      months: 'ay',
-      days: 'gün',
-      hours: 'saat',
-      minutes: 'dakika',
-      seconds: 'saniye',
-    },
-    values: {
-      months,
-      days,
-      hours,
-      minutes,
-      seconds,
-    },
-  });
-
-  if (isNewYearsDay) {
-    return `Şu kadar süredir yeni yıldayız:${translatedTime}`;
-  }
-  return `Yılbaşına${translatedTime} kaldı!`;
-};
-
-const danish = ({
-  isNewYearsDay,
-  months,
-  days,
-  hours,
-  minutes,
-  seconds,
-}) => {
-  const timeLeft = translateCommonWithPlural({
-    translations: {
-      months: 'måneder',
-      month: 'måned',
-      days: 'dage',
-      day: 'dag',
-      hours: 'timer',
-      hour: 'time',
-      minutes: 'minutter',
-      minute: 'minut',
-      seconds: 'sekunder',
-      second: 'sekund',
-    },
-    values: {
-      months,
-      days,
-      hours,
-      minutes,
-      seconds,
-    },
-  });
-
-  if (isNewYearsDay) {
-    return `Det har været nytårsdag i${timeLeft}`;
-  }
-  return `${timeLeft} indtil det er nytårsaften`;
+  return 'undefined';
 };
 
 const russian = ({
@@ -135,7 +41,6 @@ const russian = ({
   seconds,
 }) => {
   let timeLeft = '';
-
   if (months > 0) {
     timeLeft += months;
     if (months === 1) {
@@ -151,7 +56,8 @@ const russian = ({
     timeLeft += days;
     if (days % 10 === 1 && days !== 11) {
       timeLeft += ' день ';
-    } else if (days % 10 < 5 && days !== 0 && (days % 100 > 19 || days % 100 < 10) && days % 10 !== 0) {
+    } else if (days % 10 < 5 && days !== 0 && (days % 100 > 19
+      || days % 100 < 10) && days % 10 !== 0) {
       timeLeft += ' дня ';
     } else {
       timeLeft += ' дней ';
@@ -162,7 +68,8 @@ const russian = ({
     timeLeft += hours;
     if (hours % 10 === 1 && hours !== 11) {
       timeLeft += ' час ';
-    } else if (hours % 10 < 5 && hours !== 0 && (hours % 100 > 19 || hours % 100 < 10) && hours % 10 !== 0) {
+    } else if (hours % 10 < 5 && hours !== 0 && (hours % 100 > 19
+      || hours % 100 < 10) && hours % 10 !== 0) {
       timeLeft += ' часа ';
     } else {
       timeLeft += ' часов ';
@@ -173,19 +80,21 @@ const russian = ({
     timeLeft += minutes;
     if (minutes % 10 === 1 && minutes !== 11) {
       timeLeft += ' минуту ';
-    } else if (minutes % 10 < 5 && minutes !== 0 && (minutes % 100 > 19 || days % 100 < 10) && days % 10 !== 0) {
+    } else if (minutes % 10 < 5 && minutes !== 0 && (minutes % 100 > 19
+      || days % 100 < 10) && days % 10 !== 0) {
       timeLeft += ' минуты ';
     } else {
       timeLeft += ' минут ';
     }
   }
-  
+
   const secondsVal = roundValue(seconds);
   if ((secondsVal > 0) || (secondsVal === 0 && timeLeft)) {
     timeLeft += secondsVal;
     if (secondsVal % 10 === 1 && secondsVal !== 11) {
       timeLeft += ' секунду';
-    } else if (secondsVal % 10 < 5 && secondsVal !== 0 && (secondsVal % 100 > 19 || secondsVal % 100 < 10) && secondsVal % 10 !== 0) {
+    } else if (secondsVal % 10 < 5 && secondsVal !== 0 && (secondsVal % 100 > 19
+      || secondsVal % 100 < 10) && secondsVal % 10 !== 0) {
       timeLeft += ' секунды';
     } else {
       timeLeft += ' секунд';
@@ -200,8 +109,6 @@ const russian = ({
 
 // key is the language code. See src/translations.json for language codes
 module.exports = {
-  en: english,
-  da: danish,
-  tr: turkish,
-  ru: russian,
+  de: russian,
+  translate: standardTranslate,
 };

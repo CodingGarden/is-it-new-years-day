@@ -1260,8 +1260,8 @@
   "sv": {
     "no": "NEJ",
     "yes": "JA",
-    "is": "Det har varit nyårsdag för",
-    "until": "fram till nyårsdagen",
+    "is": "Det har varit nyårsdag i",
+    "until": "fram till nyårsafton",
     "language": "Swedish",
     "month": "månad",
     "months": "månader",
@@ -1271,7 +1271,7 @@
     "hours": "timmar",
     "minute": "minut",
     "minutes": "minuter",
-    "second": "andra",
+    "second": "sekund",
     "seconds": "sekunder"
   },
   "sw": {

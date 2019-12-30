@@ -59,6 +59,80 @@ const english = ({
   return `${timeLeft} until New Year's day`;
 };
 
+
+const spanish = ({
+  isNewYearsDay,
+  months,
+  days,
+  hours,
+  minutes,
+  seconds,
+}) => {
+  const timeLeft = translateCommonWithPlural({
+    translations: {
+      months: 'meses',
+      days: 'dias',
+      hours: 'horas',
+      minutes: 'minutos',
+      seconds: 'segundos',
+      month: 'mes',
+      day: 'dia',
+      hour: 'hora',
+      minute: 'minuto',
+      second: 'segundo',
+    },
+    values: {
+      months,
+      days,
+      hours,
+      minutes,
+      seconds,
+    },
+  });
+
+  if (isNewYearsDay) {
+    return `Es año nuevo desde hace ${timeLeft}`;
+  }
+  return `Faltan ${timeLeft} para Año Nuevo`;
+};
+
+
+const portuguese = ({
+  isNewYearsDay,
+  months,
+  days,
+  hours,
+  minutes,
+  seconds,
+}) => {
+  const timeLeft = translateCommonWithPlural({
+    translations: {
+      months: 'meses',
+      days: 'dias',
+      hours: 'horas',
+      minutes: 'minutos',
+      seconds: 'segundos',
+      month: 'mês',
+      day: 'dia',
+      hour: 'hora',
+      minute: 'minuto',
+      second: 'segundo',
+    },
+    values: {
+      months,
+      days,
+      hours,
+      minutes,
+      seconds,
+    },
+  });
+
+  if (isNewYearsDay) {
+    return `Foi o dia de ano novo por ${timeLeft}`;
+  }
+  return `${timeLeft} até o dia de Ano Novo`;
+};
+
 const turkish = ({
   isNewYearsDay,
   months,
@@ -329,6 +403,8 @@ const czech = ({
 // key is the language code. See src/translations.json for language codes
 module.exports = {
   en: english,
+  es: spanish,
+  pt: portuguese,
   da: danish,
   fr: french,
   tr: turkish,

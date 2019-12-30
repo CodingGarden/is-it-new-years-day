@@ -23,12 +23,12 @@ module.exports = (server) => {
     console.log('connected', socket.id);
     console.log('Total connections:', updates.totalConnections);
     // no tolerence for funny business
-    const noFunnyBusiness = (message) => {
+    const noFunnyBusiness = (message, drop = false) => {
       errors[socket.id] = errors[socket.id] || 0;
       errors[socket.id] += 1;
       socket.emit('update-error', message);
       console.error(socket.id, message);
-      if (errors[socket.id] > MAX_ERROR_COUNT) {
+      if (drop || errors[socket.id] > MAX_ERROR_COUNT) {
         const error = 'Max error limit reached.';
         socket.emit('update-error', error);
         console.error(socket.id, error, 'Disconnecting...');
@@ -38,6 +38,9 @@ module.exports = (server) => {
     socket.emit('state', state);
     // eslint-disable-next-line
     socket.on('location', (location) => {
+      if (!location || !location.x || !location.y) {
+        return noFunnyBusiness('Stop it, get some help.', true);
+      }
       if (lastMessage[socket.id]) {
         const diff = Date.now() - lastMessage[socket.id];
         if (diff < 80) {

@@ -30,8 +30,6 @@ export default {
     const transform = computed(() => `translate(-50%, -50%) translate(${currentLocation.value.x * 100}vw, ${currentLocation.value.y * 100}vh)`);
 
     onMounted(() => {
-      console.log({ animationDuration, shootDuration });
-
       setTimeout(() => {
         currentLocation.value.y = location.y;
       }, 100);

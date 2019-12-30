@@ -1,13 +1,11 @@
 <template>
   <div>
     <div v-if="ready">
-      <p class="yes-no" v-if="isNewYearsDay">{{translation.yes}}</p>
-      <p class="yes-no" v-else>{{translation.no}}</p>
-      <p class="time-left" v-if="isNewYearsDay">{{translation.is}}</p>
+      <p class="yes-no" v-if="isNewYearsDay">{{yesNoTranslation.yes}}</p>
+      <p class="yes-no" v-else>{{yesNoTranslation.no}}</p>
     </div>
-    <p class="time-left">{{currentTime}}</p>
-    <div v-if="ready && !isNewYearsDay">
-      <p class="time-left">{{translation.until}}</p>
+    <div v-if="ready">
+      <p class="time-left">{{timeTranslation}}</p>
     </div>
   </div>
 </template>
@@ -16,8 +14,10 @@
 import { ref } from '@vue/composition-api';
 import { DateTime } from 'luxon';
 
+import translations from '../translations/index';
+
 // Used https://translatr.varunmalhotra.xyz/ to generate
-const translations = require('../translations.json');
+const allTranslations = require('../translations.json');
 
 // simplified version of: https://github.com/wojtekmaj/get-user-locale
 function getLanguage(override) {
@@ -34,37 +34,18 @@ function getLanguage(override) {
 const language = getLanguage();
 // eslint-disable-next-line
 console.log('Detected language:', language);
-const translation = translations[language] || translations.en;
+const yesNoTranslation = allTranslations[language] || translations.en;
+const formatDuration = translations[language] || translations.en;
 
 export default {
   setup() {
     const favicon = document.querySelector('link[rel="icon"]');
     const ready = ref(false);
-    const currentTime = ref('Maybe...');
+    const timeTranslation = ref('Maybe...');
     let now = DateTime.local();
     const isNewYearsDay = ref(false);
 
     const durationProps = ['months', 'days', 'hours', 'minutes', 'seconds'];
-    function formatDuration(duration) {
-      return durationProps
-        .reduce((format, prop) => {
-          if (duration[prop]) {
-            // Could use Intl.RelativeTimeFormat
-            // However, requires a pollyfill in some browsers and loading all locale data
-            // https://github.com/formatjs/formatjs/tree/master/packages/intl-relativetimeformat
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat
-            // Using manual translations instead from src/translations.json
-            const value = Math.floor(Math.abs(duration[prop]));
-            let unit = translation[prop];
-            if (value === 1) {
-              unit = translation[prop.slice(0, -1)];
-            }
-            return `${format} ${value} ${unit} `;
-          }
-          return format;
-        }, '')
-        .trim();
-    }
 
     function updateClock() {
       ready.value = true;
@@ -72,13 +53,14 @@ export default {
       let newYearsDay = DateTime.local(now.year, 1, 1);
       isNewYearsDay.value = now.hasSame(newYearsDay, 'day');
       if (isNewYearsDay.value) {
-        currentTime.value = formatDuration(newYearsDay.diffNow(durationProps));
-        document.title = translation.yes;
+        timeTranslation.value = formatDuration(newYearsDay.diffNow(durationProps));
+        document.title = yesNoTranslation.yes;
         favicon.href = 'fireworks-favicon.png';
       } else {
         newYearsDay = DateTime.local(now.year + 1, 1, 1);
-        currentTime.value = formatDuration(newYearsDay.diffNow(durationProps));
-        document.title = translation.no;
+        timeTranslation.value = formatDuration(newYearsDay.diffNow(durationProps));
+        // timeTranslation.value = newYearsDay.diffNow(durationProps);
+        document.title = yesNoTranslation.no;
         favicon.href = 'x-favicon.png';
       }
 
@@ -89,9 +71,9 @@ export default {
 
     return {
       ready,
-      currentTime,
+      timeTranslation,
       isNewYearsDay,
-      translation,
+      yesNoTranslation,
     };
   },
 };

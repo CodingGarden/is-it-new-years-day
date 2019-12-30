@@ -206,7 +206,7 @@
   "de": {
     "no": "NEIN",
     "yes": "JA",
-    "is": "Es ist Silvester für",
+    "is": "Seit $time$ ist es Silvester",
     "until": "bis Silvester",
     "language": "German",
     "month": "Monat",

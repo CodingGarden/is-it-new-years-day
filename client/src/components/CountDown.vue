@@ -34,7 +34,7 @@ function getLanguage(override) {
 const language = getLanguage();
 // eslint-disable-next-line
 console.log('Detected language:', language);
-const yesNoTranslation = allTranslations[language] || translations.en;
+const yesNoTranslation = allTranslations[language] || allTranslations.en;
 const formatDuration = translations[language] || translations.en;
 
 export default {

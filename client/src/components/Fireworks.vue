@@ -33,7 +33,7 @@ export default {
     });
 
     function remove(id) {
-      fireworks.value = fireworks.value.filter(({ fId }) => fId !== id);
+      fireworks.value = fireworks.value.filter(({ id: fId }) => fId !== id);
     }
 
     return {

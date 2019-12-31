@@ -112,6 +112,7 @@ module.exports = (server) => {
           y: location.y,
         },
       });
+      hasUpdate = true;
     }
 
     async function disconnected() {

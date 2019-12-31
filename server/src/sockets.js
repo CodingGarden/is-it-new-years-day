@@ -99,11 +99,14 @@ module.exports = (server) => {
     }
 
     function addFirework(location) {
-      if (!valid(lastFirework, location, 'fireworks', 5000)) return;
-      if (updates.fireworks.length >= 10) return;
+      if (!valid(lastFirework, location, 'fireworks', 2500)) return;
+      if (updates.fireworks.length >= 20) return;
       lastFirework[socket.id] = Date.now();
       updates.fireworks.push({
-        id: socket.id + Date.now(),
+        id: socket.id + Date.now() + Math.floor(Math.random() * 1000),
+        xStart: Math.random(),
+        hue: Math.floor(Math.random() * 360),
+        length: 10 + Math.floor(20 * Math.random()),
         location: {
           x: location.x,
           y: location.y,

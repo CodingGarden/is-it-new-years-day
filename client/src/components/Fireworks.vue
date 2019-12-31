@@ -5,7 +5,10 @@
       :key="firework.id"
       :finished="remove"
       :id="firework.id"
+      :length="firework.length"
+      :hue="firework.hue"
       :location="firework.location"
+      :xStart="firework.xStart"
     />
   </div>
 </template>

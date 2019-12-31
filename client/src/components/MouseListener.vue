@@ -26,7 +26,7 @@ export default {
 
     let lastFireWorkSent;
     document.addEventListener('mousedown', (ev) => {
-      if (!lastFireWorkSent || (Date.now() - lastFireWorkSent) > 5000) {
+      if (!lastFireWorkSent || (Date.now() - lastFireWorkSent) > 3000) {
         const fwLocation = {
           x: Math.clamp(ev.x / window.innerWidth, 0, 1),
           y: Math.clamp(ev.y / window.innerHeight, 0, 1),
@@ -48,7 +48,15 @@ export default {
       }
     });
 
+    let lastLocationSent;
     function updateLocation() {
+      if (lastLocationSent) {
+        const diff = Date.now() - lastLocationSent;
+        if (diff < 80) {
+          setTimeout(updateLocation, 100);
+          return;
+        }
+      }
       if (
         Math.abs(lastLocation.x - location.x) > 0.001
         || Math.abs(lastLocation.y - location.y) > 0.001
@@ -59,6 +67,7 @@ export default {
           x: Math.clamp(location.x / window.innerWidth, 0, 1),
           y: Math.clamp(location.y / window.innerHeight, 0, 1),
         });
+        lastLocationSent = Date.now();
       }
 
       setTimeout(updateLocation, 100);

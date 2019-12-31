@@ -27,11 +27,13 @@
 import { ref, computed, onMounted } from '@vue/composition-api';
 
 export default {
-  props: ['location', 'finished'],
-  setup({ id, location, finished }) {
+  props: ['id', 'location', 'finished', 'length', 'hue', 'xStart'],
+  setup({
+    id, location, finished, length, hue, xStart,
+  }) {
     const particles = ref({});
     const currentLocation = ref({
-      x: Math.random(),
+      x: xStart,
       y: 1.1,
     });
 
@@ -48,14 +50,14 @@ export default {
       setTimeout(() => {
         currentLocation.value.x = location.x;
         currentLocation.value.y = location.y;
-        const length = 10 + 20 * Math.random();
         setTimeout(() => {
-          const background = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+          const background = `hsl(${hue}, 100%, 50%)`;
           particles.value = Array.from({ length }, () => ({
             background,
             x: location.x,
             y: location.y,
-            transform: `translate3d(-50%, -50%, 0) translate3d(${location.x * 100}vw, ${location.y * 100}vh, 0)`,
+            transform: `translate3d(-50%, -50%, 0) translate3d(${location.x
+              * 100}vw, ${location.y * 100}vh, 0)`,
           }));
           setTimeout(() => {
             // https://stackoverflow.com/a/13608420
@@ -69,7 +71,7 @@ export default {
 
             setTimeout(() => {
               finished(id);
-            }, 2100);
+            }, 3500);
           }, 100);
         }, duration * 1000 * 0.95);
       }, 100);

@@ -134,7 +134,7 @@ module.exports = (server) => {
   async function sendUpdate() {
     if (hasUpdate) {
       const total = await totalConnections();
-      io.volatile.emit('update', updates);
+      io.emit('update', updates);
       updates = {
         totalConnections: total,
         move: {},

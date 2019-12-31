@@ -1,6 +1,12 @@
 <template>
   <div class="fireworks">
-    <firework v-for="firework in fireworks" :key="firework.id" :location="firework.location" />
+    <firework
+      v-for="firework in fireworks"
+      :key="firework.id"
+      :finished="remove"
+      :id="firework.id"
+      :location="firework.location"
+    />
   </div>
 </template>
 
@@ -23,7 +29,12 @@ export default {
       }
     });
 
+    function remove(id) {
+      fireworks.value = fireworks.value.filter(({ fId }) => fId !== id);
+    }
+
     return {
+      remove,
       fireworks,
     };
   },

@@ -14,6 +14,7 @@ module.exports = (server) => {
   const state = {};
   const lastMessage = {};
   const lastFirework = {};
+  const lastEmoji = {};
   const errors = {};
   let hasUpdate = false;
   let updates = {
@@ -71,17 +72,22 @@ module.exports = (server) => {
       return false;
     }
 
-    function valid(lastTime, location, type = 'updates', maxDiff = 80) {
-      if (!location || !('x' in location) || !('y' in location)) {
-        console.error(socket.id, 'invalid data', location);
-        return noFunnyBusiness('Stop it, get some help.', true);
-      }
+    function validTimeDiff(lastTime, type = 'updates', maxDiff = 80) {
       if (lastTime[socket.id]) {
         const diff = Date.now() - lastTime[socket.id];
         if (diff < maxDiff) {
           return noFunnyBusiness(`Sending ${type} too fast. ${type} should be sent no faster than ${maxDiff} ms. Sent update: ${diff} ms`);
         }
       }
+      return true;
+    }
+
+    function valid(lastTime, location, type = 'updates', maxDiff = 80) {
+      if (!location || !('x' in location) || !('y' in location)) {
+        console.error(socket.id, 'invalid data', location);
+        return noFunnyBusiness('Stop it, get some help.', true);
+      }
+      if (!validTimeDiff(lastTime, type, maxDiff)) return false;
       if (location.x < 0 || location.x > 1) {
         return noFunnyBusiness('Invalid X Value.');
       }
@@ -127,7 +133,7 @@ module.exports = (server) => {
         id: socket.id + Date.now() + Math.floor(Math.random() * 1000),
         xStart: Math.random(),
         hue: Math.floor(Math.random() * 360),
-        length: 10 + Math.floor(20 * Math.random()),
+        length: 30 + Math.floor(30 * Math.random()),
         location: {
           x: location.x,
           y: location.y,
@@ -137,6 +143,7 @@ module.exports = (server) => {
     }
 
     function setEmoji(input) {
+      if (!validTimeDiff(lastEmoji, 'emoji update', 2500)) return;
       const [{ text: emoji }] = twemoji.parse(input);
       if (emoji) {
         state[socket.id] = state[socket.id] || {};
@@ -144,6 +151,7 @@ module.exports = (server) => {
         updates.emojis[socket.id] = emoji;
         hasUpdate = true;
         socket.emit('update-message', `Emoji set to ${emoji}`);
+        lastEmoji[socket.id] = Date.now();
       }
     }
 

@@ -51,7 +51,7 @@ export default {
         currentLocation.value.x = location.x;
         currentLocation.value.y = location.y;
         setTimeout(() => {
-          const background = `hsl(${hue}, 100%, 50%)`;
+          const background = `hsl(${hue}, 100%, 70%)`;
           particles.value = Array.from({ length }, () => ({
             background,
             x: location.x,
@@ -62,7 +62,7 @@ export default {
           setTimeout(() => {
             // https://stackoverflow.com/a/13608420
             particles.value.forEach((particle, i) => {
-              const r = (window.innerHeight / window.innerWidth) * 0.2 * Math.random();
+              const r = (window.innerHeight / window.innerWidth) * 0.3 * Math.random();
               const x = location.x + r * Math.cos((2 * Math.PI * i) / length);
               const y = location.y + r * Math.sin((2 * Math.PI * i) / length);
               particle.transform = `translate3d(-50%, -50%, 0) translate3d(${x
@@ -90,7 +90,7 @@ export default {
 <style scoped>
 .firework {
   mix-blend-mode: hard-light;
-  filter: blur(0.15vmin);
+  filter: blur(0.12vmin);
   opacity: 0;
   position: absolute;
   transition: transform ease-in-out;
@@ -111,7 +111,7 @@ export default {
   opacity: 0;
   position: absolute;
   border-radius: 50%;
-  filter: blur(0.15vmin);
+  filter: blur(0.12vmin);
   transition: transform cubic-bezier(0.25, 0.89, 0.71, 1.37);
   animation: fade-out alternate 1;
   transition-duration: 2s;

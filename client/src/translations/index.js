@@ -249,8 +249,8 @@ const russian = ({
     timeLeft += minutes;
     if (minutes % 10 === 1 && minutes !== 11) {
       timeLeft += ' минуту ';
-    } else if (minutes % 10 < 5 && minutes !== 0 && (minutes % 100 > 19 || days % 100 < 10)
-      && days % 10 !== 0) {
+    } else if (minutes % 10 < 5 && minutes !== 0 && (minutes % 100 > 19 || minutes % 100 < 10)
+      && minutes % 10 !== 0) {
       timeLeft += ' минуты ';
     } else {
       timeLeft += ' минут ';

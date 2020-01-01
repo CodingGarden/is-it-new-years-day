@@ -12,6 +12,7 @@ module.exports = (server) => {
 
   const byIPHash = {};
   const state = {};
+  const connectedStart = {};
   const lastMessage = {};
   const lastFirework = {};
   const lastEmoji = {};
@@ -30,15 +31,16 @@ module.exports = (server) => {
       io.clients((error, clients) => {
         if (clients) {
           updates.totalConnections = clients.length;
-          return resolve(clients.length);
+          return resolve(clients);
         }
-        return resolve(0);
+        return resolve([]);
       });
     });
   }
 
   // eslint-disable-next-line
   async function onConnection(socket) {
+    connectedStart[socket.id] = Date.now();
     hasUpdate = true;
     const ip = socket.handshake.headers['x-real-ip'];
     const hashedIP = crypto.createHash('md5').update(IP_SALT + ip + IP_SALT).digest('hex');
@@ -54,8 +56,8 @@ module.exports = (server) => {
     }
     console.log('connected', socket.id);
     socket.emit('state', state);
-    let total = await totalConnections();
-    console.log('Connected clients:', total);
+    let clients = await totalConnections();
+    console.log('Connected clients:', clients.length);
     console.log(byIPHash);
     // no tolerence for funny business
     function noFunnyBusiness(message, drop = false) {
@@ -97,7 +99,7 @@ module.exports = (server) => {
       return true;
     }
 
-    function updateLocation(location) {
+    function updateLocation(location, ack) {
       if (!valid(lastMessage, location)) return;
       lastMessage[socket.id] = Date.now();
       state[socket.id] = state[socket.id] || {};
@@ -109,7 +111,7 @@ module.exports = (server) => {
       if (
         lastLocation
         && (Math.abs(lastLocation.x - location.x) > 0.001
-        || Math.abs(lastLocation.y - location.y) > 0.001)
+          || Math.abs(lastLocation.y - location.y) > 0.001)
       ) {
         socketUpdates.push({
           x: location.x,
@@ -123,9 +125,10 @@ module.exports = (server) => {
         });
         hasUpdate = true;
       }
+      ack();
     }
 
-    function addFirework(location) {
+    function addFirework(location, ack) {
       if (!valid(lastFirework, location, 'fireworks', 2500)) return;
       if (updates.fireworks.length >= 20) return;
       lastFirework[socket.id] = Date.now();
@@ -140,18 +143,23 @@ module.exports = (server) => {
         },
       });
       hasUpdate = true;
+      ack();
     }
 
-    function setEmoji(input) {
+    function setEmoji(input, ack) {
       if (!validTimeDiff(lastEmoji, 'emoji update', 2500)) return;
-      const [{ text: emoji }] = twemoji.parse(input);
+      const [{
+        text: emoji
+      }] = twemoji.parse(input);
       if (emoji) {
         state[socket.id] = state[socket.id] || {};
         state[socket.id].emoji = emoji;
         updates.emojis[socket.id] = emoji;
         hasUpdate = true;
-        socket.emit('update-message', `Emoji set to ${emoji}`);
+        ack(`Emoji set to ${emoji}`);
         lastEmoji[socket.id] = Date.now();
+      } else {
+        ack('Invalid emoji');
       }
     }
 
@@ -165,10 +173,12 @@ module.exports = (server) => {
       delete errors[socket.id];
       delete lastMessage[socket.id];
       delete lastFirework[socket.id];
+      delete lastEmoji[socket.id];
+      delete connectedStart[socket.id];
       updates.disconnect[socket.id] = true;
       hasUpdate = true;
-      total = await totalConnections();
-      console.log('Connected clients:', total);
+      clients = await totalConnections();
+      console.log('Connected clients:', clients.length);
     }
 
     // eslint-disable-next-line
@@ -181,11 +191,11 @@ module.exports = (server) => {
   io.on('connection', onConnection);
 
   async function sendUpdate() {
+    const clients = await totalConnections();
     if (hasUpdate) {
-      const total = await totalConnections();
       io.volatile.emit('update', updates);
       updates = {
-        totalConnections: total,
+        totalConnections: clients.length,
         move: {},
         disconnect: {},
         fireworks: [],
@@ -193,6 +203,22 @@ module.exports = (server) => {
       };
       hasUpdate = false;
     }
+
+    clients.forEach((id) => {
+      const lastUpdate = Math.max(
+        lastMessage[id] || 0,
+        lastFirework[id] || 0,
+        lastEmoji[id] || 0,
+        connectedStart[id]
+      );
+      const socket = io.sockets.connected[id];
+      if (socket) {
+        if (Date.now() - lastUpdate > (60 * 5 * 1000)) {
+          socket.emit('update-error', 'Idle timeout.');
+          socket.disconnect(true);
+        }
+      }
+    });
 
     setTimeout(sendUpdate, 500);
   }

@@ -27,12 +27,16 @@ export default {
     let lastFireWorkSent;
     document.addEventListener('mousedown', (ev) => {
       if (!lastFireWorkSent || (Date.now() - lastFireWorkSent) > 3000) {
+        if (!lastFireWorkSent) {
+          lastFireWorkSent = Date.now();
+        }
         const fwLocation = {
           x: Math.clamp(ev.x / window.innerWidth, 0, 1),
           y: Math.clamp(ev.y / window.innerHeight, 0, 1),
         };
-        socket.emit('firework', fwLocation);
-        lastFireWorkSent = Date.now();
+        socket.emit('firework', fwLocation, () => {
+          lastFireWorkSent = Date.now();
+        });
       }
     });
 
@@ -56,6 +60,8 @@ export default {
           setTimeout(updateLocation, 100);
           return;
         }
+      } else {
+        lastLocationSent = Date.now();
       }
       if (
         Math.abs(lastLocation.x - location.x) > 0.001
@@ -66,8 +72,9 @@ export default {
         socket.emit('location', {
           x: Math.clamp(location.x / window.innerWidth, 0, 1),
           y: Math.clamp(location.y / window.innerHeight, 0, 1),
+        }, () => {
+          lastLocationSent = Date.now();
         });
-        lastLocationSent = Date.now();
       }
 
       setTimeout(updateLocation, 100);

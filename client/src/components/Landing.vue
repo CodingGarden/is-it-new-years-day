@@ -2,9 +2,10 @@
   <div class="landing">
     <count-down />
     <mouse-listener :socket="socket" :emoji="emoji" />
-    <client-state :socket="socket" :setEmoji="setEmoji" />
+    <client-state :clearState="idle" :socket="socket" :setEmoji="setEmoji" />
     <fireworks :socket="socket" />
-    <console :socket="socket" />
+    <console-actions :socket="socket" />
+    <h1 class="idle-error" v-if="idle">Idle timeout. Refresh page to re-connect.</h1>
   </div>
 </template>
 
@@ -12,7 +13,7 @@
 import io from 'socket.io-client';
 import { ref } from '@vue/composition-api';
 
-import Console from './Console.vue';
+import ConsoleActions from './ConsoleActions.vue';
 import CountDown from './CountDown.vue';
 import MouseListener from './MouseListener.vue';
 import ClientState from './ClientState.vue';
@@ -26,19 +27,19 @@ export default {
     MouseListener,
     ClientState,
     Fireworks,
-    Console,
+    ConsoleActions,
   },
   setup() {
     const socket = io(API_URL);
     const emoji = ref('💚');
+    const idle = ref(false);
 
     socket.on('update-error', (message) => {
       // eslint-disable-next-line
       console.error(message);
-    });
-    socket.on('update-message', (message) => {
-      // eslint-disable-next-line
-      console.info(message);
+      if (message === 'Idle timeout.') {
+        idle.value = true;
+      }
     });
 
     function setEmoji(value) {
@@ -46,6 +47,7 @@ export default {
     }
 
     return {
+      idle,
       socket,
       setEmoji,
       emoji,
@@ -65,5 +67,12 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
+  flex-direction: column;
+}
+
+.idle-error {
+  color: red;
+  margin: 1rem;
+  z-index: 1;
 }
 </style>

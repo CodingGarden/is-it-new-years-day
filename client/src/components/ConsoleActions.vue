@@ -11,7 +11,11 @@ export default {
     function setEmoji(text) {
       const emojis = parse(text);
       if (emojis.length) {
-        socket.emit('set-emoji', emojis[0].text);
+        socket.emit('set-emoji', emojis[0].text, (msg) => {
+          console.info(msg);
+        });
+      } else {
+        console.error('Invalid emoji', text);
       }
     }
 

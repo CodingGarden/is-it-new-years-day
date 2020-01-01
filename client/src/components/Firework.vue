@@ -34,10 +34,10 @@ export default {
     const particles = ref({});
     const currentLocation = ref({
       x: xStart,
-      y: 1.1,
+      y: 1.01,
     });
 
-    const duration = (1.1 - location.y) * 3.5;
+    const duration = (1.01 - location.y) * 3.5;
     const shootDuration = `${duration}s`;
     const animationDuration = `${duration / 1.8}s`;
 

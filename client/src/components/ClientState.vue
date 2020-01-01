@@ -25,10 +25,11 @@ export default {
     const clients = computed(() => Object.values(clientsBydId.value));
     socket.on('state', (state) => {
       clientsBydId.value = Object.entries(state).reduce(
-        (byId, [id, location]) => {
+        (byId, [id, emoji, location]) => {
           if (id !== socket.id) {
             const client = {
               id,
+              emoji,
               location,
               moves: [],
             };

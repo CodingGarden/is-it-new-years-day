@@ -12,6 +12,7 @@
     "core-js": "^3.4.4",
     "luxon": "^1.21.3",
     "socket.io-client": "^2.3.0",
+    "twemoji-parser": "^12.1.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 <template>
-  <mouse :isMine="true" :location="location" />
+  <mouse :isMine="true" :emoji="emoji" :location="location" />
 </template>
 
 <script>
@@ -10,7 +10,7 @@ import Mouse from './Mouse.vue';
 if (!Math.clamp) Math.clamp = (val, min, max) => Math.min(max, Math.max(val, min));
 
 export default {
-  props: ['socket'],
+  props: ['socket', 'emoji'],
   components: {
     Mouse,
   },

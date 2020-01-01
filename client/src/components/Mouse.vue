@@ -11,14 +11,14 @@
         scale(0.5)`,
     }"
   >
-    <img v-if="isMine" src="https://twemoji.maxcdn.com/v/latest/72x72/1f49a.png" />
-    <img v-if="!isMine" src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" />
+    <span class="emoji" v-if="!emoji">💜</span>
+    <span class="emoji" v-if="emoji">{{emoji}}</span>
   </span>
 </template>
 
 <script>
 export default {
-  props: ['location', 'isSmooth', 'isMine'],
+  props: ['location', 'isSmooth', 'isMine', 'emoji'],
 };
 </script>
 
@@ -32,5 +32,9 @@ export default {
 
 .smoothTransition {
   transition: transform 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.emoji {
+  font-size: 5rem;
 }
 </style>

@@ -5,6 +5,7 @@
       :location="client.location"
       :isSmooth="true"
       :key="client.id"
+      :emoji="client.emoji"
     />
   </div>
 </template>
@@ -18,8 +19,8 @@ export default {
   components: {
     Mouse,
   },
-  props: ['socket'],
-  setup({ socket }) {
+  props: ['socket', 'setEmoji'],
+  setup({ socket, setEmoji }) {
     const clientsBydId = ref({});
     const clients = computed(() => Object.values(clientsBydId.value));
     socket.on('state', (state) => {
@@ -62,6 +63,13 @@ export default {
         },
         {},
       );
+      Object.entries(updates.emojis).forEach(([id, emoji]) => {
+        if (clientsBydId.value[id]) {
+          clientsBydId.value[id].emoji = emoji;
+        } else if (id === socket.id) {
+          setEmoji(emoji);
+        }
+      });
     });
 
     async function updateLocations() {

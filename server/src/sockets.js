@@ -1,12 +1,16 @@
+const crypto = require('crypto');
 const socketIO = require('socket.io');
+const twemoji = require('twemoji-parser');
 
 const {
-  MAX_ERROR_COUNT = 20
+  MAX_ERROR_COUNT = 20,
+  IP_SALT,
 } = process.env;
 
 module.exports = (server) => {
   const io = socketIO(server);
 
+  const byIPHash = {};
   const state = {};
   const lastMessage = {};
   const lastFirework = {};
@@ -17,6 +21,7 @@ module.exports = (server) => {
     move: {},
     disconnect: {},
     fireworks: [],
+    emojis: {},
   };
 
   function totalConnections() {
@@ -31,12 +36,26 @@ module.exports = (server) => {
     });
   }
 
+  // eslint-disable-next-line
   async function onConnection(socket) {
     hasUpdate = true;
+    const ip = socket.handshake.headers['x-real-ip'];
+    const hashedIP = crypto.createHash('md5').update(IP_SALT + ip + IP_SALT).digest('hex');
+    if (byIPHash[hashedIP]) {
+      if (byIPHash[hashedIP] >= 5) {
+        console.log(hashedIP, 'Maximum connection limit reached.');
+        socket.emit('update-error', 'Maximum connection limit reached.');
+        return socket.disconnect(true);
+      }
+      byIPHash[hashedIP] += 1;
+    } else {
+      byIPHash[hashedIP] = 1;
+    }
     console.log('connected', socket.id);
     socket.emit('state', state);
     let total = await totalConnections();
     console.log('Connected clients:', total);
+    console.log(byIPHash);
     // no tolerence for funny business
     function noFunnyBusiness(message, drop = false) {
       errors[socket.id] = errors[socket.id] || 0;
@@ -115,8 +134,22 @@ module.exports = (server) => {
       hasUpdate = true;
     }
 
+    function setEmoji(input) {
+      const [{ text: emoji }] = twemoji.parse(input);
+      if (emoji) {
+        state[socket.id].emoji = emoji;
+        updates.emojis[socket.id] = emoji;
+        hasUpdate = true;
+        socket.emit('update-message', `Emoji set to ${emoji}`);
+      }
+    }
+
     async function disconnected() {
       console.log('disconnected', socket.id);
+      byIPHash[hashedIP] -= 1;
+      if (byIPHash[hashedIP] === 0) {
+        delete byIPHash[hashedIP];
+      }
       delete state[socket.id];
       delete errors[socket.id];
       delete lastMessage[socket.id];
@@ -131,6 +164,7 @@ module.exports = (server) => {
     socket.on('location', updateLocation);
     socket.on('firework', addFirework);
     socket.on('disconnect', disconnected);
+    socket.on('set-emoji', setEmoji);
   }
 
   io.on('connection', onConnection);
@@ -138,12 +172,13 @@ module.exports = (server) => {
   async function sendUpdate() {
     if (hasUpdate) {
       const total = await totalConnections();
-      io.emit('update', updates);
+      io.volatile.emit('update', updates);
       updates = {
         totalConnections: total,
         move: {},
         disconnect: {},
         fireworks: [],
+        emojis: {},
       };
       hasUpdate = false;
     }

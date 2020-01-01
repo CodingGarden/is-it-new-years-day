@@ -94,7 +94,9 @@ module.exports = (server) => {
     function updateLocation(location) {
       if (!valid(lastMessage, location)) return;
       lastMessage[socket.id] = Date.now();
-      state[socket.id] = location;
+      state[socket.id] = state[socket.id] || {};
+      state[socket.id].x = location.x;
+      state[socket.id].y = location.y;
       updates.move[socket.id] = updates.move[socket.id] || [];
       const socketUpdates = updates.move[socket.id];
       const lastLocation = socketUpdates[socketUpdates.length - 1];
@@ -137,6 +139,7 @@ module.exports = (server) => {
     function setEmoji(input) {
       const [{ text: emoji }] = twemoji.parse(input);
       if (emoji) {
+        state[socket.id] = state[socket.id] || {};
         state[socket.id].emoji = emoji;
         updates.emojis[socket.id] = emoji;
         hasUpdate = true;

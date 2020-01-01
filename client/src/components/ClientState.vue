@@ -26,6 +26,7 @@ export default {
     socket.on('state', (state) => {
       clientsBydId.value = Object.entries(state).reduce(
         (byId, [id, clientState]) => {
+          console.log(clientState);
           if (id !== socket.id) {
             const client = {
               id,
